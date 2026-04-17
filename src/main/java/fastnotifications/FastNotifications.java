@@ -26,6 +26,26 @@ public class FastNotifications {
     public static native void notify(String title, String message);
     
     /**
+     * Display or update a notification by tag.
+     * Same tag replaces previous notification (useful for progress updates).
+     * 
+     * @param tag     Unique identifier for this notification
+     * @param title   Notification title
+     * @param message Notification body text
+     */
+    public static native void notifyTagged(String tag, String title, String message);
+    
+    /**
+     * Display or update notification with tag and icon.
+     * 
+     * @param tag      Unique identifier for this notification
+     * @param title    Notification title
+     * @param message  Notification body text
+     * @param iconPath Path to icon file
+     */
+    public static native void notifyTagged(String tag, String title, String message, String iconPath);
+    
+    /**
      * Display a notification with custom icon.
      * 
      * @param title    Notification title
@@ -56,12 +76,24 @@ public class FastNotifications {
      * Builder class for constructing notifications with advanced options.
      */
     public static class NotificationBuilder {
+        private String tag;
         private String title;
         private String message;
         private String iconPath;
         private Urgency urgency = Urgency.NORMAL;
         private Duration timeout;
-        // TODO: Store actions for native callback
+        private final java.util.List<Action> actions = new java.util.ArrayList<>();
+        
+        /**
+         * Set a unique tag for this notification.
+         * Notifications with the same tag will replace each other.
+         * 
+         * @param tag Unique identifier (e.g., "download", "build", "status")
+         */
+        public NotificationBuilder tag(String tag) {
+            this.tag = tag;
+            return this;
+        }
         
         public NotificationBuilder title(String title) {
             this.title = title;
@@ -88,18 +120,36 @@ public class FastNotifications {
             return this;
         }
         
+        /**
+         * Add an action button to the notification.
+         * 
+         * @param label    Button text (e.g., "Open", "Dismiss")
+         * @param callback Runnable to execute when clicked (null for dismiss-only)
+         */
         public NotificationBuilder action(String label, Runnable callback) {
-            // TODO: Register native callback
+            actions.add(new Action(label, callback));
             return this;
         }
         
         /**
          * Display the configured notification.
+         * Uses tag if set, otherwise generates unique ID.
          */
         public void show() {
-            // TODO: Call native show with all parameters
-            notify(title, message, iconPath);
+            String effectiveTag = (tag != null) ? tag : java.util.UUID.randomUUID().toString();
+            if (actions.isEmpty()) {
+                notifyTagged(effectiveTag, title, message, iconPath);
+            } else {
+                // Register callbacks and show with actions
+                showWithActions(effectiveTag, title, message, iconPath, urgency, timeout, actions);
+            }
         }
+        
+        private static native void showWithActions(String tag, String title, String message, 
+                                                   String iconPath, Urgency urgency, Duration timeout,
+                                                   java.util.List<Action> actions);
+        
+        private record Action(String label, Runnable callback) {}
     }
     
     /**
