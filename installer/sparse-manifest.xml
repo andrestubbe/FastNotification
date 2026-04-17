@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Sparse Package Manifest for FastNotification
+  
+  Dieses Manifest erstellt eine "Package Identity" für deine Desktop-App,
+  ohne sie in einen MSIX-Container zu packen.
+  
+  Die App bleibt an ihrem Installationsort (z.B. C:\Program Files\FastNotification),
+  erhält aber Zugriff auf Windows-Features wie Toast Notifications.
+  
+  ANPASSEN:
+  1. Identity Name (muss eindeutig sein)
+  2. Identity Publisher (muss mit Zertifikat übereinstimmen)
+  3. Identity Version
+  4. DisplayName
+  5. Executable Name (dein Haupt-Programm)
+  6. Logo-Pfade (Assets Ordner)
+  
+  Siehe WINDOWS_NOTIFICATION_GUIDE.md für Details.
+-->
+<Package 
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap10">
+
+  <Identity 
+    Name="AndreStubbe.FastNotification" 
+    Publisher="CN=AndreStubbe" 
+    Version="1.0.0.0" 
+    ProcessorArchitecture="neutral" />
+
+  <Properties>
+    <DisplayName>FastNotification</DisplayName>
+    <PublisherDisplayName>Andre Stubbe</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <!-- Erlaubt Zugriff auf Dateien außerhalb des Packages -->
+    <uap10:AllowExternalContent>true</uap10:AllowExternalContent>
+  </Properties>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Capabilities>
+    <!-- Erlaubt volle Win32-App-Funktionalität -->
+    <rescap:Capability Name="runFullTrust" />
+    <!-- Verhindert Virtualisierung (Datei- und Registry-Zugriff bleibt normal) -->
+    <rescap:Capability Name="unvirtualizedResources"/>
+  </Capabilities>
+
+  <Applications>
+    <Application 
+      Id="FastNotification"
+      Executable="FastNotification.exe"
+      uap10:TrustLevel="mediumIL"
+      uap10:RuntimeBehavior="win32App">
+      
+      <!-- Visual Elements für Startmenü und Taskleiste -->
+      <uap:VisualElements 
+        AppListEntry="none"
+        DisplayName="FastNotification" 
+        Description="Native Windows Toast Notifications for Java" 
+        BackgroundColor="transparent" 
+        Square150x150Logo="Assets\Square150x150Logo.png" 
+        Square44x44Logo="Assets\Square44x44Logo.png" />
+
+      <!-- 
+        KOM Toast Extensions (nur wenn du WinRT Notifications mit Actions nutzt)
+        Siehe FastNotification.cpp für WinRT Implementierung
+      -->
+      <!--
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="fastnotification" />
+        </uap:Extension>
+      </Extensions>
+      -->
+      
+    </Application>
+  </Applications>
+</Package>

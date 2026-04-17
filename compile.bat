@@ -3,6 +3,14 @@ REM Compile FastNotification Native DLL
 REM Requires: Visual Studio 2022, Windows SDK
 
 echo Building FastNotification native DLL...
+echo.
+echo Choose implementation:
+echo   [Default] COM/Balloon - Works with all desktop apps, no MSIX needed
+echo   [Option]  WinRT - Full modern toasts, requires MSIX or Sparse Package
+echo.
+echo To build WinRT version, edit this file and uncomment the WinRT lines.
+echo See installer\WINDOWS_NOTIFICATION_GUIDE.md for details.
+echo.
 
 REM Set up Visual Studio environment
 set VS_PATH=C:\Program Files\Microsoft Visual Studio\2022\Community
