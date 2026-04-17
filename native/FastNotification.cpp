@@ -1,9 +1,31 @@
 /**
- * FastNotification Native Implementation
- * Windows 11 WinRT Toast Notifications via JNI
+ * @file FastNotification.cpp
+ * @brief Native Windows 11 Toast Notifications for Java
+ * 
+ * @details Implements the JNI native layer for FastNotifications using the Windows
+ * WinRT Toast API (Windows 10 1903+ / Windows 11). Provides native toast notifications
+ * with custom icons, action buttons, progress bars, and notification grouping via tags.
+ * 
+ * @par Architecture
+ * - WinRT Windows.UI.Notifications API for toast creation
+ * - XML-based toast templates (ToastGeneric)
+ * - Tag-based notification replacement (updates existing notifications)
+ * - JNI bridge for Java callback integration
+ * 
+ * @par Platform Requirements
+ * - Windows 10 version 1903 or later (partial support)
+ * - Windows 11 (full support)
+ * - Visual C++ Runtime (VS 2019/2022)
+ * 
+ * @par Key Features
+ * - AppLogoOverride: Custom app icons (replaces Java coffee cup)
+ * - Progress notifications with visual progress bars
+ * - Action buttons with Java callbacks
+ * - Urgency levels (Low, Normal, High, Critical)
  * 
  * @author Andre Stubbe
  * @version 1.0.0-alpha
+ * @since 1.0.0
  */
 
 #include <jni.h>
@@ -23,8 +45,24 @@ using namespace ABI::Windows::Data::Xml::Dom;
 static ComPtr<IToastNotifier> g_notifier;
 static std::map<std::string, ComPtr<IToastNotification>> g_activeNotifications;
 
+/** @brief Global JNI environment for callbacks */
+static JNIEnv* g_jniEnv = nullptr;
+/** @brief Global JVM reference for callback threading */
+static JavaVM* g_jvm = nullptr;
+
+// ============================================================================
+// WINRT INITIALIZATION
+// ============================================================================
+
 /**
- * Initialize WinRT Toast Notifier
+ * @brief Initialize WinRT Toast Notifier
+ * 
+ * @details Creates the ToastNotificationManager and obtains a ToastNotifier
+ * for the current application. Must be called before any toast operations.
+ * 
+ * @return true if initialization succeeded, false otherwise
+ * 
+ * @note Safe to call multiple times - returns true immediately if already initialized
  */
 bool InitializeNotifier() {
     if (g_notifier) return true;
@@ -50,8 +88,22 @@ bool InitializeNotifier() {
     return SUCCEEDED(hr);
 }
 
+// ============================================================================
+// TOAST XML GENERATION
+// ============================================================================
+
 /**
- * Create Toast XML with title, message, and optional icon
+ * @brief Create Toast XML with title, message, and optional icon
+ * 
+ * @details Generates a ToastGeneric XML document for Windows 11 notifications.
+ * Uses AppLogoOverride to replace the default application icon.
+ * 
+ * @param title    Notification title (wide string)
+ * @param message  Notification body text (wide string)
+ * @param iconPath Optional icon path for appLogoOverride (wide string, nullable)
+ * @return Wide string containing complete toast XML
+ * 
+ * @note The icon must be accessible from the process (absolute path recommended)
  */
 std::wstring CreateToastXml(const wchar_t* title, const wchar_t* message, const wchar_t* iconPath) {
     std::wstring xml = L"<toast>\n";
@@ -80,8 +132,27 @@ std::wstring CreateToastXml(const wchar_t* title, const wchar_t* message, const 
     return xml;
 }
 
+// ============================================================================
+// TOAST DISPLAY
+// ============================================================================
+
 /**
- * Show or update a toast notification
+ * @brief Show or update a toast notification
+ * 
+ * @details Creates and displays a Windows toast notification. If a tag is provided
+ * and matches an existing notification, that notification is replaced (updated).
+ * Without a tag, each call creates a new notification.
+ * 
+ * @param tag      Unique identifier for notification grouping/replacement (UTF-8, nullable)
+ * @param title    Notification title (UTF-8)
+ * @param message  Notification body text (UTF-8)
+ * @param iconPath Optional icon path for custom app logo (UTF-8, nullable)
+ * 
+ * @note This function handles all string conversions (UTF-8 -> UTF-16)
+ * @note If WinRT initialization fails, this function returns silently
+ * 
+ * @see CreateToastXml for XML generation
+ * @see InitializeNotifier for WinRT setup
  */
 void ShowToast(const char* tag, const char* title, const char* message, const char* iconPath) {
     if (!InitializeNotifier()) return;
@@ -149,11 +220,21 @@ void ShowToast(const char* tag, const char* title, const char* message, const ch
 }
 
 // ============================================================================
-// JNI Methods
+// JNI Methods - Java Native Interface
 // ============================================================================
 
 extern "C" {
 
+/**
+ * @brief JNI: Simple notification without icon
+ * 
+ * @param env     JNI environment
+ * @param clazz   Java class reference (unused)
+ * @param title   Notification title (Java String)
+ * @param message Notification body (Java String)
+ * 
+ * Java signature: native void notify(String title, String message)
+ */
 JNIEXPORT void JNICALL
 Java_fastnotifications_FastNotifications_notify(JNIEnv* env, jclass clazz, 
                                                   jstring title, jstring message) {
@@ -166,6 +247,17 @@ Java_fastnotifications_FastNotifications_notify(JNIEnv* env, jclass clazz,
     env->ReleaseStringUTFChars(message, cMessage);
 }
 
+/**
+ * @brief JNI: Tagged notification without icon
+ * 
+ * @param env     JNI environment
+ * @param clazz   Java class reference (unused)
+ * @param tag     Notification tag for replacement (Java String)
+ * @param title   Notification title (Java String)
+ * @param message Notification body (Java String)
+ * 
+ * Java signature: native void notifyTagged(String tag, String title, String message)
+ */
 JNIEXPORT void JNICALL
 Java_fastnotifications_FastNotifications_notifyTagged(JNIEnv* env, jclass clazz,
                                                        jstring tag, jstring title, jstring message) {
