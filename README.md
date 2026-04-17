@@ -1,10 +1,10 @@
-# FastNotifications — Native Java Notifications (Windows 11, macOS, Linux)
+# FastNotifications — Native Windows 11 Toast Notifications for Java
 
 **⚡ Ultra-fast native Java notifications — Replace ugly Java SystemTray with real OS-native Toasts**
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%2B%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010%2B-lightgrey.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![JitPack](https://jitpack.io/v/andrestubbe/FastNotification.svg)](https://jitpack.io/#andrestubbe/FastNotification)
 [![GitHub stars](https://img.shields.io/github/stars/andrestubbe/FastNotification.svg)](https://github.com/andrestubbe/FastNotification/stargazers)
@@ -25,7 +25,7 @@ FastNotifications.builder()
     .show();
 ```
 
-**FastNotifications** is a **high-performance native notification library for Java** that replaces the ugly, limited `java.awt.SystemTray` with **real OS-native notifications**. Built for **Windows 11 Toasts**, **macOS Banners**, and **Linux DBus notifications**.
+**FastNotifications** is a **high-performance native notification library for Java** that replaces the ugly, limited `java.awt.SystemTray` with **real OS-native notifications**. Built for **Windows 11 native WinRT Toasts** with full customization.
 
 **Keywords:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, cross platform notifications java, java desktop notifications, java notification library
 
@@ -55,7 +55,7 @@ FastNotifications.builder()
 - **Inconsistent** — Looks different on every OS
 
 FastNotifications solves this with:
-- **Native OS integration** — Real Windows 11 Toasts, macOS Banners, Linux notifications
+- **Native OS integration** — Real Windows 11 WinRT Toasts
 - **Custom app icons** — Your logo, not Java's
 - **Rich features** — Action buttons, progress bars, urgency levels, sounds
 - **JNI-powered** — Direct OS API access, zero Java UI overhead
@@ -65,8 +65,6 @@ FastNotifications solves this with:
 ## Key Features
 
 - **Windows 11 Native Toasts** — WinRT XML-based with full customization
-- **macOS Banners & Alerts** — UNUserNotificationCenter integration
-- **Linux DBus Notifications** — freedesktop.org spec compliant
 - **Custom App Icons** — Replace the ugly Java coffee cup
 - **Action Buttons** — "Open", "Dismiss", custom callbacks
 - **Progress Notifications** — Download/install progress bars
@@ -84,8 +82,6 @@ FastNotifications solves this with:
 | Action buttons | ❌ None | ✅ Custom buttons |
 | Progress bars | ❌ None | ✅ Native progress |
 | Urgency/Priority | ❌ None | ✅ High, Critical |
-| macOS Banners | ❌ Inconsistent | ✅ Native |
-| Linux integration | ❌ Poor | ✅ DBus native |
 
 ---
 
@@ -204,21 +200,6 @@ progress.complete("Installation finished");
 - Inline images
 - Deep links
 
-### macOS
-
-- Banners vs Alerts
-- Custom sounds
-- Action buttons
-- Thread identifiers
-- Inline images
-
-### Linux (DBus)
-
-- Urgency hints
-- Categories
-- Custom icons
-- Actions
-- Timeout control
 
 ---
 
@@ -228,7 +209,7 @@ progress.complete("Installation finished");
 
 - Java 17+
 - Maven 3.8+
-- Visual Studio 2022 (Windows) / Xcode (macOS) / GCC (Linux)
+- Visual Studio 2022 (Windows)
 
 ### Build
 
@@ -249,8 +230,6 @@ mvn package
 |----------|---------|--------|
 | Windows 11 | v1.0 | ✅ Full WinRT Toast support |
 | Windows 10 | v1.0 | ✅ WinRT Toast (partial) |
-| macOS 13+ | v1.0 | ✅ UNUserNotificationCenter |
-| Linux | v1.0 | ✅ DBus notifications |
 
 ---
 
@@ -259,10 +238,8 @@ mvn package
 ```
 Java API (FastNotifications.java)
     ↓ JNI
-Native Layer (C/C++/ObjC)
-    ├── Windows: WinRT Toast API
-    ├── macOS: UNUserNotificationCenter
-    └── Linux: DBus org.freedesktop.Notifications
+Native Layer (C++)
+    └── Windows: WinRT Toast API
     ↓
 OS Notification System
 ```
@@ -290,4 +267,4 @@ MIT License — free for commercial and private use. See [LICENSE](LICENSE) for 
 
 ## Keywords
 
-**SEO Tags:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, cross platform notifications java, java desktop notifications, java notification library, java windows 11 toast, java macos notifications, java linux notifications
+**SEO Tags:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, java desktop notifications, java notification library, java windows 11 toast, java winrt notifications
