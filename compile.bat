@@ -40,12 +40,23 @@ if "%JAVA_HOME%"=="" (
 
 echo Using JAVA_HOME: %JAVA_HOME%
 
-REM Compile with WinRT support
+REM Choose implementation: WinRT (modern) or COM (desktop compatible)
+REM Default: COM version for maximum compatibility
+set SOURCE_FILE=native\FastNotification_COM.cpp
+set EXTRA_LIBS=shell32.lib ole32.lib uuid.lib user32.lib gdi32.lib
+
+REM Uncomment for WinRT version (requires MSIX/APPX):
+REM set SOURCE_FILE=native\FastNotification.cpp
+REM set EXTRA_LIBS=runtimeobject.lib
+
+echo Building: %SOURCE_FILE%
+
+REM Compile
 cl.exe /EHsc /O2 /MD /LD /std:c++17 ^
     /I"%JAVA_HOME%\include" /I"%JAVA_HOME%\include\win32" ^
     /Fe:native\FastNotification.dll ^
-    native\FastNotification.cpp ^
-    runtimeobject.lib ^
+    %SOURCE_FILE% ^
+    %EXTRA_LIBS% ^
     /link /DLL /DEF:native\FastNotification.def /MACHINE:X64 /OPT:REF /OPT:ICF
 
 if %ERRORLEVEL% == 0 (
