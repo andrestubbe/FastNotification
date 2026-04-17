@@ -15,12 +15,13 @@ if not exist "%VS_PATH%" (
 
 call "%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
 
-REM Compile
-cl.exe /EHsc /O2 /MD /LD /I"%JAVA_HOME%\include" /I"%JAVA_HOME%\include\win32" ^
+REM Compile with WinRT support
+cl.exe /EHsc /O2 /MD /LD /std:c++17 ^
+    /I"%JAVA_HOME%\include" /I"%JAVA_HOME%\include\win32" ^
     /Fe:native\FastNotification.dll ^
     native\FastNotification.cpp ^
     runtimeobject.lib ^
-    /link /DLL /MACHINE:X64
+    /link /DLL /DEF:native\FastNotification.def /MACHINE:X64 /OPT:REF /OPT:ICF
 
 if %ERRORLEVEL% == 0 (
     echo Build successful!
