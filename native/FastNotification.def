@@ -1,0 +1,15 @@
+; FastNotification JNI Exports
+; Required for JNI to find native methods
+
+LIBRARY FastNotification
+
+EXPORTS
+    Java_fastnotifications_FastNotifications_notify
+    Java_fastnotifications_FastNotifications_notifyTagged
+    Java_fastnotifications_FastNotifications_notifyTagged__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_String_2
+    Java_fastnotifications_FastNotifications_notify__Ljava_lang_String_2Ljava_lang_String_2Ljava_lang_String_2
+    Java_fastnotifications_FastNotifications_00024NotificationBuilder_showWithActions
+    Java_fastnotifications_ProgressNotification_update__I
+    Java_fastnotifications_ProgressNotification_update__ILjava_lang_String_2
+    Java_fastnotifications_ProgressNotification_complete
+    Java_fastnotifications_ProgressNotification_dismiss

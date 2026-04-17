@@ -27,6 +27,8 @@ FastNotifications.builder()
 
 **FastNotifications** is a **high-performance native notification library for Java** that replaces the ugly, limited `java.awt.SystemTray` with **real OS-native notifications**. Built for **Windows 11 native WinRT Toasts** with full customization.
 
+> **Powered by FastCore** — Part of the FastJava ecosystem for native JVM acceleration.
+
 **Keywords:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, cross platform notifications java, java desktop notifications, java notification library
 
 ---
@@ -39,9 +41,10 @@ FastNotifications.builder()
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [API Reference](#api-reference)
-- [Platform Features](#platform-features)
+- [Integrations](#integrations)
 - [Build from Source](#build-from-source)
 - [Platform Support](#platform-support)
+- [Project Structure](#project-structure)
 - [License](#license)
 
 ---
@@ -163,43 +166,63 @@ progress.complete("Installation finished");
 
 ## API Reference
 
-### Static Methods
+### Core Methods
 
-- `notify(String title, String message)` — Simple notification
-- `notify(String title, String message, String iconPath)` — With custom icon
-- `builder()` — Create a NotificationBuilder
-- `progress(String title, String message)` — Create progress notification
+| Method | Description | Status |
+|--------|-------------|--------|
+| `notify(title, message)` | Simple toast notification | ✅ Working |
+| `notify(title, message, icon)` | Toast with custom icon | ✅ Working |
+| `notifyTagged(tag, title, message)` | Tagged notification (replaces existing) | ✅ Working |
+| `notifyTagged(tag, title, message, icon)` | Tagged with icon | ✅ Working |
+| `builder()` | Create advanced notification | ✅ Working |
+| `progress(title, message)` | Progress notification | 🚧 Planned |
 
 ### NotificationBuilder
 
-- `title(String title)` — Notification title
-- `message(String message)` — Body text
-- `icon(String path)` — Path to icon image (PNG recommended)
-- `urgency(Urgency level)` — LOW, NORMAL, HIGH, CRITICAL
-- `timeout(Duration duration)` — Auto-dismiss timeout
-- `action(String label, Runnable callback)` — Add action button
-- `show()` — Display the notification
+| Method | Description |
+|--------|-------------|
+| `tag(String id)` | Unique identifier (replaces existing with same tag) |
+| `title(String text)` | Notification title |
+| `message(String text)` | Body text |
+| `icon(String path)` | PNG icon path (replaces Java coffee cup) |
+| `urgency(Urgency)` | LOW, NORMAL, HIGH, CRITICAL |
+| `timeout(Duration)` | Auto-dismiss timeout |
+| `action(String, Runnable)` | Add button with callback |
+| `show()` | Display notification |
 
-### ProgressNotification
+### Urgency Levels
 
-- `update(int percent)` — Update progress (0-100)
-- `update(int percent, String message)` — Update with new message
-- `complete(String message)` — Mark as complete
-- `dismiss()` — Close notification
+| Level | Windows Behavior |
+|-------|-----------------|
+| `LOW` | Quiet notification, no sound |
+| `NORMAL` | Standard toast |
+| `HIGH` | Persistent, shows on lock screen |
+| `CRITICAL` | Forces immediate attention |
 
 ---
 
-## Platform Features
+## Integrations
 
-### Windows 11
+### FastRobot Debug Mode
 
-- Toast XML templates
-- AppLogoOverride (custom icon)
-- Progress bars
-- Action buttons
-- Inline images
-- Deep links
+Enable real-time toast notifications for bot actions:
 
+```java
+import fastnotifications.integrations.FastRobotDebug;
+
+// Enable debug notifications
+FastRobotDebug.enable();
+
+// Now all FastRobot actions show toast:
+// - "🖱️ Click #1 at (500, 300)"
+// - "⌨️ Key #5: Pressed: ENTER"
+// - "📸 Screen Capture: 1920x1080 in 12ms"
+
+// Show session summary
+FastRobotDebug.showSummary();
+```
+
+See [FastRobotDebug.java](src/main/java/fastnotifications/integrations/FastRobotDebug.java) for full API.
 
 ---
 
@@ -226,33 +249,69 @@ mvn package
 
 ## Platform Support
 
-| Platform | Version | Status |
-|----------|---------|--------|
-| Windows 11 | v1.0 | ✅ Full WinRT Toast support |
-| Windows 10 | v1.0 | ✅ WinRT Toast (partial) |
+| Platform | Version | Status | Notes |
+|----------|---------|--------|-------|
+| Windows 11 | v1.0 | ✅ Full support | WinRT Toast XML, all features |
+| Windows 10 | v1.0 | ⚠️ Partial | Requires v1903+, some features limited |
+| macOS | — | ❌ Not planned | Use native macOS notifications |
+| Linux | — | ❌ Not planned | Use DBus directly |
+
+**Windows-only by design** — We focus on maximum performance on the most common platform.
 
 ---
 
 ## Architecture
 
 ```
-Java API (FastNotifications.java)
+fastnotifications (Java API)
     ↓ JNI
-Native Layer (C++)
-    └── Windows: WinRT Toast API
+native/FastNotification.dll (C++/WinRT)
+    ↓ Windows Runtime
+Windows.UI.Notifications (WinRT)
     ↓
-OS Notification System
+Windows 11 Notification Center
+```
+
+**Key Technologies:**
+- **JNI** — Java-to-native bridge
+- **WinRT** — Windows Runtime API for Toasts
+- **FastCore** — Native library loading (optional dependency)
+
+---
+
+## Project Structure
+
+```
+FastNotification/
+├── native/
+│   ├── FastNotification.cpp       # WinRT implementation
+│   ├── FastNotification.h         # C++ header
+│   ├── FastNotification.def       # JNI exports (REQUIRED!)
+│   └── FastNotification.dll       # Built native library
+├── src/main/java/fastnotifications/
+│   ├── FastNotifications.java       # Main API
+│   ├── ProgressNotification.java    # Progress toasts
+│   ├── Demo.java                    # Example usage
+│   └── integrations/
+│       └── FastRobotDebug.java      # FastRobot integration
+├── compile.bat                      # Native build script
+├── COMPILE.md                       # Build instructions
+├── pom.xml                          # Maven config
+└── README.md                        # This file
 ```
 
 ---
 
 ## License
 
-MIT License — free for commercial and private use. See [LICENSE](LICENSE) for details.
+MIT License — See [LICENSE](LICENSE) for details.
 
 ---
 
-**Part of the FastJava Ecosystem** — *Making the JVM faster.*
+**FastNotifications** — *Part of the FastJava Ecosystem*  
+- [FastCore](https://github.com/andrestubbe/FastCore) — JNI loader  
+- [FastRobot](https://github.com/andrestubbe/FastRobot) — Ultra-fast automation  
+- More at [github.com/andrestubbe](https://github.com/andrestubbe)
 
 ---
 

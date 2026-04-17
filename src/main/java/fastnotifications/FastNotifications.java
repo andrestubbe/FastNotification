@@ -3,18 +3,54 @@ package fastnotifications;
 import java.time.Duration;
 
 /**
- * FastNotifications — Native Java notifications for Windows 11, macOS, Linux.
+ * FastNotifications — Native Windows 11 Toast Notifications for Java.
  * 
- * Replaces ugly java.awt.SystemTray with real OS-native Toasts.
+ * Replaces ugly java.awt.SystemTray with real OS-native WinRT Toasts.
+ * Powered by FastCore for native library loading.
+ * 
+ * <p><b>Key Features:</b>
+ * <ul>
+ *   <li>Custom app icons (no Java coffee cup!)</li>
+ *   <li>Tag-based notification replacement</li>
+ *   <li>Action buttons with callbacks</li>
+ *   <li>Progress notifications</li>
+ *   <li>Urgency levels (Low, Normal, High, Critical)</li>
+ * </ul>
+ * 
+ * <p><b>Quick Start:</b>
+ * <pre>{@code
+ * // Simple notification
+ * FastNotifications.notify("Hello", "World!");
+ * 
+ * // With custom icon
+ * FastNotifications.notify("Build", "Complete!", "myapp.png");
+ * 
+ * // Advanced with tag replacement
+ * FastNotifications.builder()
+ *     .tag("download")           // Updates existing notification
+ *     .title("Download")
+ *     .message("50% complete")
+ *     .icon("download.png")
+ *     .action("Pause", () -> pauseDownload())
+ *     .show();
+ * }</pre>
  * 
  * @author Andre Stubbe
  * @version 1.0.0-alpha
+ * @see fastnotifications.integrations.FastRobotDebug
  */
 public class FastNotifications {
     
     static {
-        // TODO: Load native library via FastCore
-        System.loadLibrary("fastnotification");
+        // Load native library via FastCore or fall back to System.loadLibrary
+        try {
+            // Try FastCore first if available
+            Class<?> fastCore = Class.forName("fastcore.FastCore");
+            fastCore.getMethod("loadLibrary", String.class).invoke(null, "fastnotification");
+        } catch (Exception e) {
+            // Fall back to standard loading
+            System.loadLibrary("fastnotification");
+        }
     }
     
     /**
