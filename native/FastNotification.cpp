@@ -34,10 +34,14 @@
 #include <map>
 
 // WinRT headers for Toast Notifications
+#include <roapi.h>
+#include <hstring.h>
 #include <windows.ui.notifications.h>
 #include <wrl/client.h>
+#include <wrl/wrappers/corewrappers.h>
 
 using namespace Microsoft::WRL;
+using namespace Microsoft::WRL::Wrappers;
 using namespace ABI::Windows::UI::Notifications;
 using namespace ABI::Windows::Data::Xml::Dom;
 

@@ -31,7 +31,7 @@ public class Demo {
             .title("Download Complete")
             .message("File saved to Downloads")
             .urgency(FastNotifications.Urgency.NORMAL)
-            .timeout(Duration.seconds(5))
+            .timeout(Duration.ofSeconds(5))
             .show();
         
         Thread.sleep(3000);

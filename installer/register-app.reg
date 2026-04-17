@@ -1,0 +1,19 @@
+Windows Registry Editor Version 5.00
+
+; FastNotification Windows Toast Registration
+; This registry file registers the application for Windows Toast notifications
+; Should be imported by the installer during setup (NOT manually by users)
+
+; App registration for Toast notifications
+[HKEY_CURRENT_USER\Software\Classes\AppUserModelId\FastNotification]
+"DisplayName"="FastNotification"
+"IconUri"="C:\\Program Files\\FastNotification\\icon.png"
+"ShowInSettings"=dword:00000001
+
+; Toast capabilities
+[HKEY_CURRENT_USER\Software\Classes\AppUserModelId\FastNotification\ToastCapabilities]
+"ToastCapable"=dword:00000001
+
+; Default icon fallback (Windows will show this if no custom icon provided)
+[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\TrayNotify]
+"IconStream"=hex:
