@@ -57,10 +57,19 @@ FastNotifications.builder()
 - **Deprecated** — Uses old balloon API on Windows
 - **Inconsistent** — Looks different on every OS
 
+**Plus:** Windows 10/11 requires app registration for modern notifications — FastNotifications handles this with **3 integration levels**:
+
+| Level | Effort | Result |
+|-------|--------|--------|
+| **Level 1** (5 min) | Build DLL → Run | Basic notifications (Balloon) |
+| **Level 2** (2 hrs) | + Sparse Package | Full WinRT Toasts (like Teams) |
+| **Level 3** (3-10 days) | + MSIX + Store | Store distribution |
+
 FastNotifications solves this with:
-- **Native OS integration** — Real Windows 11 WinRT Toasts
+- **Flexible integration** — Choose your setup level
+- **Native OS integration** — Real Windows 11 WinRT Toasts (Level 2+)
 - **Custom app icons** — Your logo, not Java's
-- **Rich features** — Action buttons, progress bars, urgency levels, sounds
+- **Rich features** — Action buttons, progress bars, urgency levels (Level 2+)
 - **JNI-powered** — Direct OS API access, zero Java UI overhead
 
 ---
@@ -121,18 +130,99 @@ dependencies {
 
 ---
 
-## Quick Start
+## Quick Start — Choose Your Setup Level
 
-### Basic Notification
+FastNotification offers **3 integration levels** for different needs:
+
+| Level | Setup Time | Features | Best For |
+|-------|-----------|----------|----------|
+| **Level 1** | 5 minutes | Basic notifications (Balloon style) | Testing, internal tools |
+| **Level 2** | 2 hours | Full Windows 11 Toasts with actions | Production apps |
+| **Level 3** | 3-10 days | Microsoft Store integration | Store distribution |
+
+### Level 1 — Quick Test (5 min)
+
+```bash
+# 1. Build native DLL
+compile.bat
+
+# 2. Compile Java
+mvn compile
+
+# 3. Run demo
+java --% -cp "target\classes" -Djava.library.path="native" --enable-native-access=ALL-UNNAMED fastnotifications.Demo
+```
+
+```java
+// Simple code
+FastNotifications.notify("Hello", "From Java!");
+```
+
+> ⚠️ **Note:** Windows 10/11 may hide balloon notifications. This is Microsoft's design, not a bug. See [Level 2](#level-2--production-setup) for full toasts.
+
+### Level 2 — Production Setup (2 hours)
+
+For **modern WinRT Toasts** (like Outlook/Teams):
+
+1. **Create identity package** (one-time setup)
+   ```powershell
+   cd installer
+   .\create-package.ps1 -SelfSigned
+   .\register-sparse.ps1 -InstallPath "C:\Program Files\YourApp"
+   ```
+
+2. **Build WinRT DLL**
+   ```bash
+   # Edit compile.bat: uncomment WinRT lines
+   compile.bat
+   ```
+
+3. **Use full features**
+   ```java
+   FastNotifications.builder()
+       .title("Download complete")
+       .message("Ready to install")
+       .icon("app.png")
+       .action("Install", this::install)
+       .action("Later", null)
+       .show();
+   ```
+
+📖 **Details:** See `installer/WINDOWS_NOTIFICATION_GUIDE.md`
+
+### Level 3 — Microsoft Store
+
+For Store distribution with auto-updates:
+
+- Full MSIX packaging required
+- Code-signing certificate needed
+- Store submission process
+
+📖 **Details:** See Microsoft Store developer documentation
+
+---
+
+## Basic Usage Examples
+
+### Simple Notification
 
 ```java
 import fastnotifications.FastNotifications;
 
-// Simple native toast
-FastNotifications.notify("Hello World", "This is a native notification!");
+// Level 1 & 2: Works with both DLLs
+FastNotifications.notify("Build finished", "Completed in 42ms");
 ```
 
-### Builder API
+### Tagged Notifications (Updates Existing)
+
+```java
+// Show progress that updates in place
+FastNotifications.notifyTagged("download-1", "Downloading", "50%...");
+Thread.sleep(2000);
+FastNotifications.notifyTagged("download-1", "Downloading", "100% - Done!");
+```
+
+### Builder API (Level 2+)
 
 ```java
 FastNotifications.builder()
@@ -146,7 +236,7 @@ FastNotifications.builder()
     .show();
 ```
 
-### Progress Notification
+### Progress Notification (Level 2+)
 
 ```java
 ProgressNotification progress = FastNotifications.progress(
@@ -284,21 +374,46 @@ Windows 11 Notification Center
 ```
 FastNotification/
 ├── native/
-│   ├── FastNotification.cpp       # WinRT implementation
-│   ├── FastNotification.h         # C++ header
-│   ├── FastNotification.def       # JNI exports (REQUIRED!)
-│   └── FastNotification.dll       # Built native library
+│   ├── FastNotification.cpp         # WinRT implementation (Level 2+)
+│   ├── FastNotification_COM.cpp     # COM implementation (Level 1)
+│   ├── FastNotification.h           # C++ header
+│   ├── FastNotification.def         # JNI exports (REQUIRED!)
+│   └── FastNotification.dll         # Built native library
 ├── src/main/java/fastnotifications/
 │   ├── FastNotifications.java       # Main API
 │   ├── ProgressNotification.java    # Progress toasts
 │   ├── Demo.java                    # Example usage
 │   └── integrations/
 │       └── FastRobotDebug.java      # FastRobot integration
+├── installer/
+│   ├── WINDOWS_NOTIFICATION_GUIDE.md  # Windows architecture guide
+│   ├── sparse-manifest.xml            # Sparse package template
+│   ├── create-package.ps1             # Package builder script
+│   ├── register-sparse.ps1            # Registration script
+│   ├── register-app.reg               # Registry entries
+│   └── install.ps1                    # Setup automation
 ├── compile.bat                      # Native build script
 ├── COMPILE.md                       # Build instructions
+├── GETTING_STARTED.md               # Quick start guide
+├── REACTION.md                      # Developer notes
 ├── pom.xml                          # Maven config
 └── README.md                        # This file
 ```
+
+---
+
+## Documentation
+
+| Document | Purpose |
+|----------|---------|
+| [`GETTING_STARTED.md`](GETTING_STARTED.md) | Quick setup guide with 3 integration levels |
+| [`installer/WINDOWS_NOTIFICATION_GUIDE.md`](installer/WINDOWS_NOTIFICATION_GUIDE.md) | Windows notification architecture & decision guide |
+| [`COMPILE.md`](COMPILE.md) | Detailed build instructions for native DLL |
+
+**Quick Navigation:**
+- Just want to test? → [Level 1 in GETTING_STARTED.md](GETTING_STARTED.md#level-1--quick-test-5-min)
+- Building for production? → [Level 2 in GETTING_STARTED.md](GETTING_STARTED.md#level-2--production-setup-2-hours)
+- Understanding Windows quirks? → [WINDOWS_NOTIFICATION_GUIDE.md](installer/WINDOWS_NOTIFICATION_GUIDE.md)
 
 ---
 
