@@ -1,6 +1,6 @@
 # Getting Started with FastNotification
 
-## Quick Start (5 Minuten)
+## Quick Start (5 Minutes)
 
 ### 1. Download & Extract
 ```bash
@@ -8,213 +8,213 @@ git clone https://github.com/andrestubbe/FastNotification.git
 cd FastNotification
 ```
 
-### 2. Native DLL kompilieren
+### 2. Compile Native DLL
 ```bash
-# Windows: compile.bat ausführen
+# Windows: run compile.bat
 compile.bat
 ```
 
-> **Hinweis:** Braucht Visual Studio 2022 (kostenlos). Alternativ: Vorkompilierte DLL aus Releases nehmen.
+> **Note:** Requires Visual Studio 2022 (free). Alternatively: Use pre-compiled DLL from Releases.
 
-### 3. Java-Code kompilieren
+### 3. Compile Java Code
 ```bash
 mvn clean compile
 ```
 
-### 4. Demo starten
+### 4. Run Demo
 ```bash
 java --% -cp "target\classes" -Djava.library.path="native" --enable-native-access=ALL-UNNAMED fastnotifications.Demo
 ```
 
 ---
 
-## Was solltest du sehen?
+## What You Should See
 
-### Wenn alles funktioniert:
-Windows zeigt **3 Benachrichtigungen** nacheinander:
-1. Einfache Benachrichtigung
-2. Benachrichtigung mit Icon  
-3. Benachrichtigung mit Builder-Pattern
+### When everything works:
+Windows shows **3 notifications** in sequence:
+1. Simple notification
+2. Notification with icon  
+3. Notification with Builder pattern
 
-### Wenn nichts erscheint:
-Das ist **normal** auf Windows 10/11! Microsoft hat Benachrichtigungen für Desktop-Apps eingeschränkt.
+### If nothing appears:
+This is **normal** on Windows 10/11! Microsoft has restricted notifications for Desktop Apps.
 
-**Lösung siehe unten:** [Level 1, 2 oder 3 wählen](#level-wählen)
+**See solution below:** [Choose Level 1, 2, or 3](#choose-level)
 
 ---
 
-## Level wählen
+## Choose Level
 
-FastNotification bietet **3 Integrations-Level** für unterschiedliche Anforderungen:
+FastNotification offers **3 integration levels** for different requirements:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  LEVEL 1: Sofort testen (30 Sekunden)                      │
+│  LEVEL 1: Test immediately (30 seconds)                    │
 │  ─────────────────────────────────                          │
-│  • Balloon-Style Benachrichtigungen                         │
-│  • Funktioniert sofort, kein Setup nötig                    │
-│  • Windows 11 blendet diese manchmal aus                    │
+│  • Balloon-style notifications                              │
+│  • Works immediately, no setup required                     │
+│  • Windows 11 sometimes hides these                       │
 │                                                              │
-│  Code: FastNotifications.notify("Titel", "Text");           │
+│  Code: FastNotifications.notify("Title", "Message");         │
 └─────────────────────────────────────────────────────────────┘
-                              ↓ (brauchst mehr?)
+                              ↓ (need more?)
 ┌─────────────────────────────────────────────────────────────┐
-│  LEVEL 2: Produktionsreif (2 Stunden Setup)                 │
+│  LEVEL 2: Production-ready (2 hours setup)                  │
 │  ────────────────────────────────────────                   │
-│  • Moderne Toast-Benachrichtigungen                          │
-│  • Action-Buttons, Progress-Bars                             │
-│  • Echter Installer nötig (Sparse Package)                   │
+│  • Modern toast notifications                               │
+│  • Action buttons, progress bars                            │
+│  • Real installer required (Sparse Package)                 │
 │                                                              │
-│  Siehe: installer/WINDOWS_NOTIFICATION_GUIDE.md             │
+│  See: installer/WINDOWS_NOTIFICATION_GUIDE.md             │
 └─────────────────────────────────────────────────────────────┘
-                              ↓ (brauchst mehr?)
+                              ↓ (need more?)
 ┌─────────────────────────────────────────────────────────────┐
-│  LEVEL 3: Microsoft Store (3-10 Tage)                       │
+│  LEVEL 3: Microsoft Store (3-10 days)                       │
 │  ───────────────────────────────────                        │
-│  • Vollständige Store-Integration                          │
-│  • Automatische Updates                                      │
-│  • Code-Signing Zertifikat nötig                           │
+│  • Full Store integration                                   │
+│  • Automatic updates                                        │
+│  • Code-signing certificate required                        │
 │                                                              │
-│  Siehe: Microsoft Store Entwickler-Dokumentation            │
+│  See: Microsoft Store Developer Documentation               │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Empfehlung:
-- **Prototyp/Intern:** Level 1
-- **Tool für Kunden:** Level 2
-- **Verkauf über Store:** Level 3
+### Recommendation:
+- **Prototype/Internal:** Level 1
+- **Tool for customers:** Level 2
+- **Store distribution:** Level 3
 
 ---
 
-## Level 1: Schnell starten
+## Level 1: Quick Start
 
-### Java-Code
+### Java Code
 ```java
 import fastnotifications.FastNotifications;
 
 public class MyApp {
     static {
-        // DLL laden (Windows)
+        // Load DLL (Windows)
         System.loadLibrary("FastNotification");
     }
     
     public void showNotification() {
-        // Einfache Benachrichtigung
-        FastNotifications.notify("Hallo", "Das ist ein Test!");
+        // Simple notification
+        FastNotifications.notify("Hello", "This is a test!");
         
-        // Mit Tag (ersetzt alte mit gleichem Tag)
-        FastNotifications.notifyTagged("update-1", "Download", "50% fertig...");
+        // With tag (replaces old with same tag)
+        FastNotifications.notifyTagged("update-1", "Download", "50% complete...");
         
-        // Nach 2 Sekunden aktualisieren
+        // Update after 2 seconds
         Thread.sleep(2000);
-        FastNotifications.notifyTagged("update-1", "Download", "100% fertig!");
+        FastNotifications.notifyTagged("update-1", "Download", "100% complete!");
     }
 }
 ```
 
-### Was der User sieht
-- **Windows 10:** Balloon im System-Tray (rechts unten)
-- **Windows 11:** Kann deaktiviert sein (siehe Troubleshooting)
+### What the User Sees
+- **Windows 10:** Balloon in system tray (bottom right)
+- **Windows 11:** May be disabled (see Troubleshooting)
 
-> ⚠️ **Windows 11 blendet Balloon-Benachrichtigungen oft aus.** Das ist kein Bug, das ist Microsofts Design-Entscheidung.
+> ⚠️ **Windows 11 often hides balloon notifications.** This is not a bug, it's Microsoft's design decision.
 
 ---
 
-## Level 2: Moderne Toasts
+## Level 2: Modern Toasts
 
-Für **vollständige moderne Benachrichtigungen** (wie Outlook/Teams):
+For **full modern notifications** (like Outlook/Teams):
 
-### Schritt 1: Sparse Package erstellen (einmalig)
+### Step 1: Create Sparse Package (one-time)
 ```powershell
-# Als Administrator:
+# As Administrator:
 cd installer
 .\create-package.ps1 -SelfSigned
-.\register-sparse.ps1 -InstallPath "C:\Program Files\DeinApp"
+.\register-sparse.ps1 -InstallPath "C:\Program Files\YourApp"
 ```
 
-### Schritt 2: WinRT DLL bauen
+### Step 2: Build WinRT DLL
 ```bash
-# compile.bat editieren: WinRT statt COM wählen
-# Zeile 45: SOURCE_FILE auf FastNotification.cpp ändern
+# Edit compile.bat: Select WinRT instead of COM
+# Line 45: Change SOURCE_FILE to FastNotification.cpp
 compile.bat
 ```
 
-### Schritt 3: Action-Buttons nutzen
+### Step 3: Use Action Buttons
 ```java
 Notification.builder("Download")
-    .message("Datei wird heruntergeladen...")
+    .message("File is downloading...")
     .tag("download-123")
     .actions(Arrays.asList(
-        new Action("Abbrechen", () -> cancelDownload()),
+        new Action("Cancel", () -> cancelDownload()),
         new Action("Pause", () -> pauseDownload())
     ))
     .show();
 ```
 
-**Details:** Siehe `installer/WINDOWS_NOTIFICATION_GUIDE.md`
+**Details:** See `installer/WINDOWS_NOTIFICATION_GUIDE.md`
 
 ---
 
 ## Troubleshooting
 
-### "Es erscheint gar nichts"
+### "Nothing appears"
 
-#### Prüfung 1: Windows Einstellungen
+#### Check 1: Windows Settings
 ```
-Einstellungen → System → Benachrichtigungen
-→ "Benachrichtigungen erhalten" muss AN sein
-→ Fokus-Assist muss AUS sein
-```
-
-#### Prüfung 2: Stiller Modus
-Windows 11 hat einen "Stillen Modus" der alle Benachrichtigungen blockiert:
-```
-Taskleiste → Uhr → Rechtsklick → "Nicht stören" prüfen
+Settings → System → Notifications
+→ "Get notifications" must be ON
+→ Focus Assist must be OFF
 ```
 
-#### Prüfung 3: App-Registrierung (für Level 2)
+#### Check 2: Silent Mode
+Windows 11 has a "Silent Mode" that blocks all notifications:
+```
+Taskbar → Clock → Right-click → Check "Do not disturb"
+```
+
+#### Check 3: App Registration (for Level 2)
 ```powershell
-# Prüfen ob Package registriert
+# Check if package is registered
 Get-AppxPackage | Where-Object { $_.Name -like "*FastNotification*" }
 
-# Falls nicht: Registrieren
-Add-AppxPackage -Path "FastNotification-Identity.msix" -ExternalLocation "C:\DeinPfad"
+# If not: Register
+Add-AppxPackage -Path "FastNotification-Identity.msix" -ExternalLocation "C:\YourPath"
 ```
 
-### "DLL nicht gefunden"
+### "DLL not found"
 ```bash
-# Java-Argument prüfen:
+# Check Java argument:
 -Djava.library.path="native"
 
-# Oder DLL nach System32 kopieren (nicht empfohlen):
+# Or copy DLL to System32 (not recommended):
 copy native\FastNotification.dll C:\Windows\System32\
 ```
 
-### "Access Denied" beim Registrieren
-Sparse Package braucht **Administrator-Rechte** für Installation.
+### "Access Denied" when registering
+Sparse Package requires **Administrator rights** for installation.
 
 ---
 
 ## FAQ
 
-**Q: Warum so kompliziert?**  
-A: Microsoft will alle zum Microsoft Store pushen. Für Desktop-Apps gibt es daher extra Hürden.
+**Q: Why so complicated?**  
+A: Microsoft wants everyone on the Microsoft Store. Therefore, extra hurdles for Desktop Apps.
 
-**Q: Funktioniert das auf Mac/Linux?**  
-A: Nein, nur Windows. Native Features erfordern native Code.
+**Q: Does this work on Mac/Linux?**  
+A: No, only Windows. Native features require native code.
 
-**Q: Brauche ich einen Installer?**  
-A: Für Level 1 (Testen): Nein. Für Level 2 (Produktion): Ja, aber nur für die einmalige Registrierung.
+**Q: Do I need an installer?**  
+A: For Level 1 (testing): No. For Level 2 (production): Yes, but only for the one-time registration.
 
-**Q: Was ist der Unterschied zu JavaFX Notifications?**  
-A: JavaFX zeigt Notifications innerhalb der App. FastNotification zeigt native Windows-Benachrichtigungen (auch wenn App minimiert ist).
+**Q: What's the difference from JavaFX Notifications?**  
+A: JavaFX shows notifications within the app. FastNotification shows native Windows notifications (even when app is minimized).
 
 ---
 
 ## Next Steps
 
-1. **Jetzt:** Level 1 ausprobieren (`Demo.java` starten)
-2. **Sofort:** Prüfen ob Balloons erscheinen
-3. **Später:** Für Produktion auf Level 2 upgraden
+1. **Now:** Try Level 1 (run `Demo.java`)
+2. **Immediately:** Check if balloons appear
+3. **Later:** Upgrade to Level 2 for production
 
-**Hilfe:** [GitHub Issues](https://github.com/andrestubbe/FastNotification/issues)
+**Help:** [GitHub Issues](https://github.com/andrestubbe/FastNotification/issues)

@@ -2,208 +2,208 @@
 
 ## Overview
 
-Windows 11/10 bietet **3 Wege** für Desktop-Apps um Toast Notifications zu zeigen:
+Windows 11/10 offers **3 ways** for Desktop Apps to show Toast Notifications:
 
-| Methode | Aufwand | Funktioniert | Empfohlen für |
+| Method | Effort | Works | Recommended for |
 |---------|---------|--------------|---------------|
-| **A. MSIX Full Package** (Microsoft Store) | Hoch | ✅ Vollständig | Store-Veröffentlichung |
-| **B. Sparse Package** (External Location) | Mittel | ✅ Vollständig | Enterprise/Custom Installer |
-| **C. COM Balloon (Legacy)** | Niedrig | ⚠️ Fallback | Einfache Integration |
+| **A. MSIX Full Package** (Microsoft Store) | High | ✅ Fully | Store Publishing |
+| **B. Sparse Package** (External Location) | Medium | ✅ Fully | Enterprise/Custom Installer |
+| **C. COM Balloon (Legacy)** | Low | ⚠️ Fallback | Simple Integration |
 
 ---
 
 ## Option A: Full MSIX Package (Microsoft Store)
 
-### Was ist das?
-App wird vollständig in MSIX-Container gepackt und über Microsoft Store oder Sideloading verteilt.
+### What is this?
+App is fully packaged in MSIX container and distributed via Microsoft Store or sideloading.
 
-### Vorteile
-- ✅ Alle Windows Features sofort verfügbar
-- ✅ Automatische Updates via Store
-- ✅ Sandboxing & Sicherheit
+### Advantages
+- ✅ All Windows features immediately available
+- ✅ Automatic updates via Store
+- ✅ Sandboxing & Security
 
-### Nachteile
-- ❌ Dateisystem- und Registry-Zugriff eingeschränkt
-- ❌ Java JVM muss im Package enthalten sein (groß!)
-- ❌ Komplexer Build-Prozess
+### Disadvantages
+- ❌ Filesystem and Registry access restricted
+- ❌ Java JVM must be included in package (large!)
+- ❌ Complex build process
 
-### Aufwand
-| Schritt | Zeit | Beschreibung |
+### Effort
+| Step | Time | Description |
 |---------|------|--------------|
-| MSIX Manifest erstellen | 2-4h | XML mit App-Identität |
-| JVM + JAR packen | 1-2h | ~200MB Package-Größe |
-| Zertifikat kaufen | 1-3 Tage | Code-Signing für Store |
-| Store Submission | 1-7 Tage | Microsoft Review |
-| **Gesamt** | **3-10 Tage** | |
+| Create MSIX Manifest | 2-4h | XML with App Identity |
+| Package JVM + JAR | 1-2h | ~200MB Package Size |
+| Buy Certificate | 1-3 days | Code-Signing for Store |
+| Store Submission | 1-7 days | Microsoft Review |
+| **Total** | **3-10 days** | |
 
-### Benötigt
-- Code-Signing Zertifikat (~$100-400/Jahr)
+### Required
+- Code-Signing Certificate (~$100-400/year)
 - Windows 10/11 SDK
 - MSIX Packaging Tool
 
 ---
 
-## Option B: Sparse Package (Identity + External Location) ⭐ EMPFOHLEN
+## Option B: Sparse Package (Identity + External Location) ⭐ RECOMMENDED
 
-### Was ist das?
-Ein minimales MSIX-Package (nur Identität, ~50KB) wird registriert. Deine App bleibt an originaler Location (z.B. `C:\Program Files\FastNotification`).
+### What is this?
+A minimal MSIX package (only identity, ~50KB) is registered. Your app stays at original location (e.g., `C:\Program Files\FastNotification`).
 
-### Vorteile
-- ✅ Alle Windows Features verfügbar
-- ✅ App bleibt unverändert (kein Container)
-- ✅ Einfacher als Full MSIX
-- ✅ Funktioniert mit existierendem Installer (WiX, Inno, NSIS)
+### Advantages
+- ✅ All Windows features available
+- ✅ App stays unchanged (no container)
+- ✅ Easier than Full MSIX
+- ✅ Works with existing installer (WiX, Inno, NSIS)
 
-### Nachteile
-- ⚠️ Code-Signing Zertifikat nötig (kann selbst-signiert sein für interne Apps)
-- ⚠️ Eine Registrierung pro User/Machine nötig
+### Disadvantages
+- ⚠️ Code-Signing certificate needed (can be self-signed for internal apps)
+- ⚠️ One registration per user/machine needed
 
-### Aufwand
-| Schritt | Zeit | Beschreibung |
+### Effort
+| Step | Time | Description |
 |---------|------|--------------|
-| Manifest erstellen | 30min | Unsere Vorlage nutzen |
-| Package signieren | 30min | Mit Zertifikat |
-| Installer anpassen | 1h | PowerShell-Registrierung |
-| **Gesamt** | **2-3 Stunden** | |
+| Create Manifest | 30min | Use our template |
+| Sign Package | 30min | With certificate |
+| Adapt Installer | 1h | PowerShell registration |
+| **Total** | **2-3 Hours** | |
 
-### Was du brauchst
-1. **App-Identität** (Name, Publisher, Version)
-2. **Code-Signing Zertifikat** (kann selbst-signiert für Entwicklung sein)
-3. **Icons** (44x44, 150x150, Store-Logo)
-4. **Installer-Integration** (siehe `register-sparse.ps1`)
+### What you need
+1. **App Identity** (Name, Publisher, Version)
+2. **Code-Signing Certificate** (can be self-signed for development)
+3. **Icons** (44x44, 150x150, Store logo)
+4. **Installer Integration** (see `register-sparse.ps1`)
 
-### Unsere Vorlagen
-- `installer\sparse-manifest.xml` - Fertiges Manifest
-- `installer\register-sparse.ps1` - Registrierung im Installer
-- `installer\create-package.ps1` - Package erstellen & signieren
+### Our Templates
+- `installer\sparse-manifest.xml` - Ready manifest
+- `installer\register-sparse.ps1` - Registration in installer
+- `installer\create-package.ps1` - Create & sign package
 
 ---
 
 ## Option C: COM Balloon (Legacy)
 
-### Was ist das?
-Nutzt die alte `Shell_NotifyIcon` API für Tray-Balloons (nicht moderne Toasts).
+### What is this?
+Uses the old `Shell_NotifyIcon` API for tray balloons (not modern toasts).
 
-### Vorteile
-- ✅ Sofort funktionsfähig
-- ✅ Keine Registrierung nötig
-- ✅ Funktioniert auf Windows 7/8/10/11
+### Advantages
+- ✅ Works immediately
+- ✅ No registration needed
+- ✅ Works on Windows 7/8/10/11
 
-### Nachteile
-- ❌ Zeigt Balloon, nicht moderne Toast
-- ❌ In Windows 11 werden Balloons oft unterdrückt
-- ❌ Keine Action-Buttons
-- ❌ Keine Progress-Bars
-- ❌ Zeigt Windows-Logo statt App-Icon
+### Disadvantages
+- ❌ Shows balloon, not modern toast
+- ❌ On Windows 11 balloons are often suppressed
+- ❌ No action buttons
+- ❌ No progress bars
+- ❌ Shows Windows logo instead of app icon
 
-### Aufwand
-| Schritt | Zeit | Beschreibung |
+### Effort
+| Step | Time | Description |
 |---------|------|--------------|
-| DLL einbinden | 5min | `FastNotification_COM.dll` nutzen |
-| **Gesamt** | **5 Minuten** | |
+| Include DLL | 5min | Use `FastNotification_COM.dll` |
+| **Total** | **5 Minutes** | |
 
-### Wann nutzen?
-- Schneller Prototyp
-- Interne Tools
-- Windows 7/8 Kompatibilität
+### When to use?
+- Quick prototype
+- Internal tools
+- Windows 7/8 compatibility
 
 ---
 
-## Entscheidungshilfe
+## Decision Guide
 
 ```
-Willst du in Microsoft Store? ──JA──→ Option A: Full MSIX
-                           │
-                           └─NEIN─┬─ Enterprise/Umgebung mit PKI? ──JA──→ Option B: Sparse Package
+Want to publish in Microsoft Store? ──YES──→ Option A: Full MSIX
                                     │
-                                    └─ Schnell & einfach? ──JA──→ Option C: COM Balloon
+                                    └─NO──┬─ Enterprise/Environment with PKI? ──YES──→ Option B: Sparse Package
+                                          │
+                                          └─ Quick & simple? ──YES──→ Option C: COM Balloon
 ```
 
-### Für FastNotification Produkte
+### For FastNotification Products
 
-| Produkt-Typ | Empfohlene Option |
+| Product Type | Recommended Option |
 |-------------|-------------------|
-| **Open Source Library** | B (Sparse) - volle Funktionen, einfach für User |
-| **Enterprise Tool** | B (Sparse) - MSI-Integration |
+| **Open Source Library** | B (Sparse) - full features, easy for users |
+| **Enterprise Tool** | B (Sparse) - MSI integration |
 | **Microsoft Store App** | A (Full MSIX) |
-| **Schneller Prototyp** | C (COM) - sofort testen |
+| **Quick Prototype** | C (COM) - test immediately |
 
 ---
 
-## Technische Details
+## Technical Details
 
 ### AppUserModelID (AUMID)
-Die eindeutige Identität deiner App:
+The unique identity of your app:
 ```
 [Company].[AppName][.OptionalSuffix]
-Beispiel: "AndreStubbe.FastNotification.v1"
+Example: "AndreStubbe.FastNotification.v1"
 ```
 
-Muss konsistent sein in:
+Must be consistent in:
 - MSIX Manifest (Name)
-- Startmenü-Shortcut (System.AppUserModel.ID)
-- Java Code (optional, falls nutzen)
+- Start Menu Shortcut (System.AppUserModel.ID)
+- Java Code (optional, if used)
 
-### COM Toast Activator (nur für WinRT/Sparse)
-Für Action-Buttons in Toasts brauchst du:
-- Einen COM-Server mit GUID
-- Registrierung in Registry (LocalServer32)
-- Implementierung des `INotificationActivationCallback` Interfaces
+### COM Toast Activator (only for WinRT/Sparse)
+For action buttons in toasts you need:
+- A COM server with GUID
+- Registration in Registry (LocalServer32)
+- Implementation of `INotificationActivationCallback` interface
 
-Siehe: `FastNotification.cpp` (WinRT Version)
+See: `FastNotification.cpp` (WinRT Version)
 
-### Zertifikate
+### Certificates
 
-| Typ | Preis | Gültigkeit | Nutzung |
+| Type | Price | Validity | Usage |
 |-----|-------|------------|---------|
-| **Selbst-signiert** | Kostenlos | Lokal/Entwicklung | Nur auf deinem PC |
-| **Enterprise CA** | Interne Kosten | Domain | Firmen-Netzwerk |
-| **Commercial** | $100-400/Jahr | Global | Alle Windows PCs |
+| **Self-signed** | Free | Local/Development | Only on your PC |
+| **Enterprise CA** | Internal Cost | Domain | Company Network |
+| **Commercial** | $100-400/year | Global | All Windows PCs |
 
-Empfohlene Anbieter: DigiCert, Sectigo (Comodo), GlobalSign
+Recommended providers: DigiCert, Sectigo (Comodo), GlobalSign
 
 ---
 
 ## Troubleshooting
 
 ### "Notifications don't appear"
-1. Prüfe Windows Einstellungen → System → Notifications
-2. Ist deine App in der Liste? Wenn nein → Registrierung fehlgeschlagen
-3. Fokus-Assist (Störungsfrei) aktiv? → Deaktivieren
+1. Check Windows Settings → System → Notifications
+2. Is your app in the list? If no → Registration failed
+3. Focus Assist active? → Disable
 
 ### "Shows Windows logo instead of my icon"
-- Icon-Pfade im Manifest prüfen
-- Bilder müssen im Package/Install-Ordner vorhanden sein
-- Formate: PNG mit Transparenz
+- Check icon paths in manifest
+- Images must be present in package/install folder
+- Formats: PNG with transparency
 
 ### "App not in notification settings"
-- Startmenü-Shortcut fehlt oder hat falsche AUMID
-- MSIX Package nicht registriert
+- Start menu shortcut missing or has wrong AUMID
+- MSIX package not registered
 
 ---
 
-## Nächste Schritte
+## Next Steps
 
-### Für Sparse Package (Empfohlen):
-1. Zertifikat besorgen (oder selbst-signiert erstellen)
-2. `installer\sparse-manifest.xml` anpassen (Name, Publisher)
-3. Icons in `installer\Assets\` ablegen
-4. `create-package.ps1` ausführen
-5. Package in deinen Installer integrieren (`register-sparse.ps1`)
+### For Sparse Package (Recommended):
+1. Get certificate (or create self-signed)
+2. Adapt `installer\sparse-manifest.xml` (Name, Publisher)
+3. Place icons in `installer\Assets\`
+4. Run `create-package.ps1`
+5. Integrate package in your installer (`register-sparse.ps1`)
 
-### Für Full MSIX:
-1. MSIX Packaging Tool installieren
-2. Application Packaging Project in Visual Studio erstellen
-3. Alle Dependencies (JVM, JARs) einschließen
-4. Store-Veröffentlichung vorbereiten
+### For Full MSIX:
+1. Install MSIX Packaging Tool
+2. Create Application Packaging Project in Visual Studio
+3. Include all dependencies (JVM, JARs)
+4. Prepare Store publishing
 
-### Für COM Balloon:
-1. `compile.bat` nutzen (baut automatisch COM-Version)
-2. Testen ob Balloons in deiner Windows-Version erscheinen
+### For COM Balloon:
+1. Use `compile.bat` (automatically builds COM version)
+2. Test if balloons appear in your Windows version
 
 ---
 
-**Microsoft Dokumentation:**
+**Microsoft Documentation:**
 - [Send Toast from Desktop C++](https://learn.microsoft.com/en-us/windows/apps/design/shell/tiles-and-notifications/send-local-toast-desktop-cpp-wrl)
 - [Grant Identity via Sparse Package](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps)
 - [AppUserModelID Registration](https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/hh802762(v=vs.85))

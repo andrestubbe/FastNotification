@@ -2,21 +2,21 @@
 <!--
   Sparse Package Manifest for FastNotification
   
-  Dieses Manifest erstellt eine "Package Identity" für deine Desktop-App,
-  ohne sie in einen MSIX-Container zu packen.
+  This manifest creates a "Package Identity" for your Desktop App
+  without packing it into an MSIX container.
   
-  Die App bleibt an ihrem Installationsort (z.B. C:\Program Files\FastNotification),
-  erhält aber Zugriff auf Windows-Features wie Toast Notifications.
+  The app stays at its installation location (e.g., C:\Program Files\FastNotification)
+  but gets access to Windows features like Toast Notifications.
   
-  ANPASSEN:
-  1. Identity Name (muss eindeutig sein)
-  2. Identity Publisher (muss mit Zertifikat übereinstimmen)
+  CUSTOMIZE:
+  1. Identity Name (must be unique)
+  2. Identity Publisher (must match certificate)
   3. Identity Version
   4. DisplayName
-  5. Executable Name (dein Haupt-Programm)
-  6. Logo-Pfade (Assets Ordner)
+  5. Executable Name (your main program)
+  6. Logo paths (Assets folder)
   
-  Siehe WINDOWS_NOTIFICATION_GUIDE.md für Details.
+  See WINDOWS_NOTIFICATION_GUIDE.md for details.
 -->
 <Package 
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
@@ -35,7 +35,7 @@
     <DisplayName>FastNotification</DisplayName>
     <PublisherDisplayName>Andre Stubbe</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
-    <!-- Erlaubt Zugriff auf Dateien außerhalb des Packages -->
+    <!-- Allows access to files outside the package -->
     <uap10:AllowExternalContent>true</uap10:AllowExternalContent>
   </Properties>
 
@@ -48,9 +48,9 @@
   </Dependencies>
 
   <Capabilities>
-    <!-- Erlaubt volle Win32-App-Funktionalität -->
+    <!-- Allows full Win32 app functionality -->
     <rescap:Capability Name="runFullTrust" />
-    <!-- Verhindert Virtualisierung (Datei- und Registry-Zugriff bleibt normal) -->
+    <!-- Prevents virtualization (file and registry access remains normal) -->
     <rescap:Capability Name="unvirtualizedResources"/>
   </Capabilities>
 
@@ -61,7 +61,7 @@
       uap10:TrustLevel="mediumIL"
       uap10:RuntimeBehavior="win32App">
       
-      <!-- Visual Elements für Startmenü und Taskleiste -->
+      <!-- Visual elements for start menu and taskbar -->
       <uap:VisualElements 
         AppListEntry="none"
         DisplayName="FastNotification" 
@@ -71,8 +71,8 @@
         Square44x44Logo="Assets\Square44x44Logo.png" />
 
       <!-- 
-        KOM Toast Extensions (nur wenn du WinRT Notifications mit Actions nutzt)
-        Siehe FastNotification.cpp für WinRT Implementierung
+        COM Toast Extensions (only if you use WinRT notifications with actions)
+        See FastNotification.cpp for WinRT implementation
       -->
       <!--
       <Extensions>

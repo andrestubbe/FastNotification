@@ -318,22 +318,7 @@ See [FastRobotDebug.java](src/main/java/fastnotifications/integrations/FastRobot
 
 ## Build from Source
 
-### Prerequisites
-
-- Java 17+
-- Maven 3.8+
-- Visual Studio 2022 (Windows)
-
-### Build
-
-```bash
-git clone https://github.com/andrestubbe/FastNotification.git
-cd FastNotification
-
-mvn clean compile
-mvn test
-mvn package
-```
+See [COMPILE.md](COMPILE.md) for detailed build instructions.
 
 ---
 
@@ -393,7 +378,6 @@ FastNotification/
 │   ├── register-app.reg               # Registry entries
 │   └── install.ps1                    # Setup automation
 ├── compile.bat                      # Native build script
-├── COMPILE.md                       # Build instructions
 ├── GETTING_STARTED.md               # Quick start guide
 ├── REACTION.md                      # Developer notes
 ├── pom.xml                          # Maven config
@@ -408,7 +392,6 @@ FastNotification/
 |----------|---------|
 | [`GETTING_STARTED.md`](GETTING_STARTED.md) | Quick setup guide with 3 integration levels |
 | [`installer/WINDOWS_NOTIFICATION_GUIDE.md`](installer/WINDOWS_NOTIFICATION_GUIDE.md) | Windows notification architecture & decision guide |
-| [`COMPILE.md`](COMPILE.md) | Detailed build instructions for native DLL |
 
 **Quick Navigation:**
 - Just want to test? → [Level 1 in GETTING_STARTED.md](GETTING_STARTED.md#level-1--quick-test-5-min)
