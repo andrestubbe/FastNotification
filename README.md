@@ -1,4 +1,4 @@
-# FastNotification — Native Windows toast notifications for Java
+# FastNotification — Native Windows toast notifications for Java [ALPHA]
 
 **⚡ Ultra-fast native Java notifications — Replace ugly Java SystemTray with real OS-native Toasts**
 
