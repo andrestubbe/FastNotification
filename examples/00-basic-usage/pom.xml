@@ -5,13 +5,13 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fastnotification.examples</groupId>
-    <artifactId>basic-notification-demo</artifactId>
-    <version>1.0.0</version>
+    <groupId>com.github.andrestubbe</groupId>
+    <artifactId>fastnotification-demo</artifactId>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>FastNotification Basic Demo</name>
-    <description>Simple notification example for FastNotification</description>
+    <name>FastNotification Demo</name>
+    <description>Demo application for FastNotification</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -29,12 +29,18 @@
     <dependencies>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
+            <artifactId>fastcore</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.andrestubbe</groupId>
             <artifactId>fastnotification</artifactId>
-            <version>v1.0.0</version>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
 
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

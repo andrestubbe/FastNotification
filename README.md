@@ -1,5 +1,4 @@
-# FastNotification — Native Windows toast notifications for Java
-
+# FastNotification — Native Windows toast notifications for Java [ALPHA] - v0.1.0
 **⚡ Ultra-fast native Java notifications — Replace ugly Java SystemTray with real OS-native Toasts**
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
@@ -143,13 +142,13 @@ FastNotification offers **3 integration levels** for different needs:
 ### Level 1 — Quick Test (5 min)
 
 ```bash
-# 1. Build native DLL
+# 1. Build native DLL [ALPHA] - v0.1.0
 compile.bat
 
-# 2. Compile Java
+# 2. Compile Java [ALPHA] - v0.1.0
 mvn compile
 
-# 3. Run demo
+# 3. Run demo [ALPHA] - v0.1.0
 java --% -cp "target\classes" -Djava.library.path="native" --enable-native-access=ALL-UNNAMED fastnotifications.Demo
 ```
 
@@ -425,3 +424,4 @@ MIT License — See [LICENSE](LICENSE) for details.
 ## Keywords
 
 **SEO Tags:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, java desktop notifications, java notification library, java windows 11 toast, java winrt notifications
+
