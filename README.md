@@ -1,13 +1,6 @@
 ﻿# FastNotification — Native Windows toast notifications for Java [ALPHA] - v0.1.0
 **⚡ Ultra-fast native Java notifications — Replace ugly Java SystemTray with real OS-native Toasts**
 
-[![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%2B-lightgrey.svg)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![JitPack](https://jitpack.io/v/andrestubbe/FastNotification.svg)](https://jitpack.io/#andrestubbe/FastNotification)
-[![GitHub stars](https://img.shields.io/github/stars/andrestubbe/FastNotification.svg)](https://github.com/andrestubbe/FastNotification/stargazers)
-
 ```java
 // Quick Start — Native Windows 11 Toast
 FastNotifications.notify("Build finished", "FastImage compiled in 42ms");
@@ -29,6 +22,12 @@ FastNotifications.builder()
 > **Powered by FastCore** — Part of the FastJava ecosystem for native JVM acceleration.
 
 **Keywords:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, cross platform notifications java, java desktop notifications, java notification library
+
+[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastNotification/releases/tag/v0.1.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
+[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
 ---
 
