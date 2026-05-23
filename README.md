@@ -1,5 +1,5 @@
-# FastNotification — Native Windows toast notifications for Java [ALPHA] - v0.1.0
-**⚡ Ultra-fast native Java notifications — Replace ugly Java SystemTray with real OS-native Toasts**
+﻿# FastNotification â€” Native Windows toast notifications for Java [ALPHA] - v0.1.0
+**âš¡ Ultra-fast native Java notifications â€” Replace ugly Java SystemTray with real OS-native Toasts**
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
@@ -9,10 +9,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/andrestubbe/FastNotification.svg)](https://github.com/andrestubbe/FastNotification/stargazers)
 
 ```java
-// Quick Start — Native Windows 11 Toast
+// Quick Start â€” Native Windows 11 Toast
 FastNotifications.notify("Build finished", "FastImage compiled in 42ms");
 
-// Full control — Custom icon, action buttons, urgency
+// Full control â€” Custom icon, action buttons, urgency
 FastNotifications.builder()
     .title("Download complete")
     .message("File saved to /downloads")
@@ -26,7 +26,7 @@ FastNotifications.builder()
 
 **FastNotifications** is a **high-performance native notification library for Java** that replaces the ugly, limited `java.awt.SystemTray` with **real OS-native notifications**. Built for **Windows 11 native WinRT Toasts** with full customization.
 
-> **Powered by FastCore** — Part of the FastJava ecosystem for native JVM acceleration.
+> **Powered by FastCore** â€” Part of the FastJava ecosystem for native JVM acceleration.
 
 **Keywords:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, cross platform notifications java, java desktop notifications, java notification library
 
@@ -51,36 +51,36 @@ FastNotifications.builder()
 ## Why FastNotifications?
 
 `java.awt.SystemTray` notifications are:
-- **Ugly** — Always shows the Java coffee cup icon
-- **Limited** — No action buttons, no progress bars, no priorities
-- **Deprecated** — Uses old balloon API on Windows
-- **Inconsistent** — Looks different on every OS
+- **Ugly** â€” Always shows the Java coffee cup icon
+- **Limited** â€” No action buttons, no progress bars, no priorities
+- **Deprecated** â€” Uses old balloon API on Windows
+- **Inconsistent** â€” Looks different on every OS
 
-**Plus:** Windows 10/11 requires app registration for modern notifications — FastNotifications handles this with **3 integration levels**:
+**Plus:** Windows 10/11 requires app registration for modern notifications â€” FastNotifications handles this with **3 integration levels**:
 
 | Level | Effort | Result |
 |-------|--------|--------|
-| **Level 1** (5 min) | Build DLL → Run | Basic notifications (Balloon) |
+| **Level 1** (5 min) | Build DLL â†’ Run | Basic notifications (Balloon) |
 | **Level 2** (2 hrs) | + Sparse Package | Full WinRT Toasts (like Teams) |
 | **Level 3** (3-10 days) | + MSIX + Store | Store distribution |
 
 FastNotifications solves this with:
-- **Flexible integration** — Choose your setup level
-- **Native OS integration** — Real Windows 11 WinRT Toasts (Level 2+)
-- **Custom app icons** — Your logo, not Java's
-- **Rich features** — Action buttons, progress bars, urgency levels (Level 2+)
-- **JNI-powered** — Direct OS API access, zero Java UI overhead
+- **Flexible integration** â€” Choose your setup level
+- **Native OS integration** â€” Real Windows 11 WinRT Toasts (Level 2+)
+- **Custom app icons** â€” Your logo, not Java's
+- **Rich features** â€” Action buttons, progress bars, urgency levels (Level 2+)
+- **JNI-powered** â€” Direct OS API access, zero Java UI overhead
 
 ---
 
 ## Key Features
 
-- **Windows 11 Native Toasts** — WinRT XML-based with full customization
-- **Custom App Icons** — Replace the ugly Java coffee cup
-- **Action Buttons** — "Open", "Dismiss", custom callbacks
-- **Progress Notifications** — Download/install progress bars
-- **Urgency Levels** — Low, Normal, High, Critical
-- **Zero Dependencies** — Pure JNI, no JavaFX, no Swing, no AWT
+- **Windows 11 Native Toasts** â€” WinRT XML-based with full customization
+- **Custom App Icons** â€” Replace the ugly Java coffee cup
+- **Action Buttons** â€” "Open", "Dismiss", custom callbacks
+- **Progress Notifications** â€” Download/install progress bars
+- **Urgency Levels** â€” Low, Normal, High, Critical
+- **Zero Dependencies** â€” Pure JNI, no JavaFX, no Swing, no AWT
 
 ---
 
@@ -88,11 +88,11 @@ FastNotifications solves this with:
 
 | Feature | SystemTray | FastNotifications |
 |---------|------------|-------------------|
-| Icon | ❌ Java coffee cup | ✅ Your custom icon |
-| Windows 11 style | ❌ Deprecated balloon | ✅ Native WinRT Toast |
-| Action buttons | ❌ None | ✅ Custom buttons |
-| Progress bars | ❌ None | ✅ Native progress |
-| Urgency/Priority | ❌ None | ✅ High, Critical |
+| Icon | âŒ Java coffee cup | âœ… Your custom icon |
+| Windows 11 style | âŒ Deprecated balloon | âœ… Native WinRT Toast |
+| Action buttons | âŒ None | âœ… Custom buttons |
+| Progress bars | âŒ None | âœ… Native progress |
+| Urgency/Priority | âŒ None | âœ… High, Critical |
 
 ---
 
@@ -101,7 +101,7 @@ FastNotifications solves this with:
 ### Option 1: Maven (Recommended)
 Add the JitPack repository and the dependencies to your `pom.xml`:
 
-`xml
+```xml
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -116,6 +116,7 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
         <artifactId>fastnotification</artifactId>
         <version>v0.1.0</version>
     </dependency>
+
     <!-- FastCore (Required Native Loader) -->
     <dependency>
         <groupId>com.github.andrestubbe</groupId>
@@ -123,19 +124,19 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
         <version>v0.1.0</version>
     </dependency>
 </dependencies>
-`
+```
 
 ### Option 2: Gradle (via JitPack)
-`groovy
+```groovy
 repositories {
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.github.andrestubbe:.1.0'
+    implementation 'com.github.andrestubbe:fastnotification:v0.1.0'
     implementation 'com.github.andrestubbe:fastcore:v0.1.0'
 }
-`
+```
 
 ### Option 3: Direct Download (No Build Tool)
 Download the latest JARs directly to add them to your classpath:
@@ -147,7 +148,7 @@ Download the latest JARs directly to add them to your classpath:
 > All JARs must be in your classpath for the native JNI calls to function correctly.
 
 
-## Quick Start — Choose Your Setup Level
+## Quick Start â€” Choose Your Setup Level
 
 FastNotification offers **3 integration levels** for different needs:
 
@@ -157,7 +158,7 @@ FastNotification offers **3 integration levels** for different needs:
 | **Level 2** | 2 hours | Full Windows 11 Toasts with actions | Production apps |
 | **Level 3** | 3-10 days | Microsoft Store integration | Store distribution |
 
-### Level 1 — Quick Test (5 min)
+### Level 1 â€” Quick Test (5 min)
 
 ```bash
 # 1. Build native DLL [ALPHA] - v0.1.0
@@ -175,9 +176,9 @@ java --% -cp "target\classes" -Djava.library.path="native" --enable-native-acces
 FastNotifications.notify("Hello", "From Java!");
 ```
 
-> ⚠️ **Note:** Windows 10/11 may hide balloon notifications. This is Microsoft's design, not a bug. See [Level 2](#level-2--production-setup) for full toasts.
+> âš ï¸ **Note:** Windows 10/11 may hide balloon notifications. This is Microsoft's design, not a bug. See [Level 2](#level-2--production-setup) for full toasts.
 
-### Level 2 — Production Setup (2 hours)
+### Level 2 â€” Production Setup (2 hours)
 
 For **modern WinRT Toasts** (like Outlook/Teams):
 
@@ -205,9 +206,9 @@ For **modern WinRT Toasts** (like Outlook/Teams):
        .show();
    ```
 
-📖 **Details:** See `installer/WINDOWS_NOTIFICATION_GUIDE.md`
+ðŸ“– **Details:** See `installer/WINDOWS_NOTIFICATION_GUIDE.md`
 
-### Level 3 — Microsoft Store
+### Level 3 â€” Microsoft Store
 
 For Store distribution with auto-updates:
 
@@ -215,7 +216,7 @@ For Store distribution with auto-updates:
 - Code-signing certificate needed
 - Store submission process
 
-📖 **Details:** See Microsoft Store developer documentation
+ðŸ“– **Details:** See Microsoft Store developer documentation
 
 ---
 
@@ -277,12 +278,12 @@ progress.complete("Installation finished");
 
 | Method | Description | Status |
 |--------|-------------|--------|
-| `notify(title, message)` | Simple toast notification | ✅ Working |
-| `notify(title, message, icon)` | Toast with custom icon | ✅ Working |
-| `notifyTagged(tag, title, message)` | Tagged notification (replaces existing) | ✅ Working |
-| `notifyTagged(tag, title, message, icon)` | Tagged with icon | ✅ Working |
-| `builder()` | Create advanced notification | ✅ Working |
-| `progress(title, message)` | Progress notification | 🚧 Planned |
+| `notify(title, message)` | Simple toast notification | âœ… Working |
+| `notify(title, message, icon)` | Toast with custom icon | âœ… Working |
+| `notifyTagged(tag, title, message)` | Tagged notification (replaces existing) | âœ… Working |
+| `notifyTagged(tag, title, message, icon)` | Tagged with icon | âœ… Working |
+| `builder()` | Create advanced notification | âœ… Working |
+| `progress(title, message)` | Progress notification | ðŸš§ Planned |
 
 ### NotificationBuilder
 
@@ -321,9 +322,9 @@ import fastnotifications.integrations.FastRobotDebug;
 FastRobotDebug.enable();
 
 // Now all FastRobot actions show toast:
-// - "🖱️ Click #1 at (500, 300)"
-// - "⌨️ Key #5: Pressed: ENTER"
-// - "📸 Screen Capture: 1920x1080 in 12ms"
+// - "ðŸ–±ï¸ Click #1 at (500, 300)"
+// - "âŒ¨ï¸ Key #5: Pressed: ENTER"
+// - "ðŸ“¸ Screen Capture: 1920x1080 in 12ms"
 
 // Show session summary
 FastRobotDebug.showSummary();
@@ -343,12 +344,12 @@ See [COMPILE.md](COMPILE.md) for detailed build instructions.
 
 | Platform | Version | Status | Notes |
 |----------|---------|--------|-------|
-| Windows 11 | v1.0 | ✅ Full support | WinRT Toast XML, all features |
-| Windows 10 | v1.0 | ⚠️ Partial | Requires v1903+, some features limited |
-| macOS | — | ❌ Not planned | Use native macOS notifications |
-| Linux | — | ❌ Not planned | Use DBus directly |
+| Windows 11 | v1.0 | âœ… Full support | WinRT Toast XML, all features |
+| Windows 10 | v1.0 | âš ï¸ Partial | Requires v1903+, some features limited |
+| macOS | â€” | âŒ Not planned | Use native macOS notifications |
+| Linux | â€” | âŒ Not planned | Use DBus directly |
 
-**Windows-only by design** — We focus on maximum performance on the most common platform.
+**Windows-only by design** â€” We focus on maximum performance on the most common platform.
 
 ---
 
@@ -356,18 +357,18 @@ See [COMPILE.md](COMPILE.md) for detailed build instructions.
 
 ```
 fastnotifications (Java API)
-    ↓ JNI
+    â†“ JNI
 native/FastNotification.dll (C++/WinRT)
-    ↓ Windows Runtime
+    â†“ Windows Runtime
 Windows.UI.Notifications (WinRT)
-    ↓
+    â†“
 Windows 11 Notification Center
 ```
 
 **Key Technologies:**
-- **JNI** — Java-to-native bridge
-- **WinRT** — Windows Runtime API for Toasts
-- **FastCore** — Native library loading (optional dependency)
+- **JNI** â€” Java-to-native bridge
+- **WinRT** â€” Windows Runtime API for Toasts
+- **FastCore** â€” Native library loading (optional dependency)
 
 ---
 
@@ -375,30 +376,30 @@ Windows 11 Notification Center
 
 ```
 FastNotification/
-├── native/
-│   ├── FastNotification.cpp         # WinRT implementation (Level 2+)
-│   ├── FastNotification_COM.cpp     # COM implementation (Level 1)
-│   ├── FastNotification.h           # C++ header
-│   ├── FastNotification.def         # JNI exports (REQUIRED!)
-│   └── FastNotification.dll         # Built native library
-├── src/main/java/fastnotifications/
-│   ├── FastNotifications.java       # Main API
-│   ├── ProgressNotification.java    # Progress toasts
-│   ├── Demo.java                    # Example usage
-│   └── integrations/
-│       └── FastRobotDebug.java      # FastRobot integration
-├── installer/
-│   ├── WINDOWS_NOTIFICATION_GUIDE.md  # Windows architecture guide
-│   ├── sparse-manifest.xml            # Sparse package template
-│   ├── create-package.ps1             # Package builder script
-│   ├── register-sparse.ps1            # Registration script
-│   ├── register-app.reg               # Registry entries
-│   └── install.ps1                    # Setup automation
-├── compile.bat                      # Native build script
-├── GETTING_STARTED.md               # Quick start guide
-├── REACTION.md                      # Developer notes
-├── pom.xml                          # Maven config
-└── README.md                        # This file
+â”œâ”€â”€ native/
+â”‚   â”œâ”€â”€ FastNotification.cpp         # WinRT implementation (Level 2+)
+â”‚   â”œâ”€â”€ FastNotification_COM.cpp     # COM implementation (Level 1)
+â”‚   â”œâ”€â”€ FastNotification.h           # C++ header
+â”‚   â”œâ”€â”€ FastNotification.def         # JNI exports (REQUIRED!)
+â”‚   â””â”€â”€ FastNotification.dll         # Built native library
+â”œâ”€â”€ src/main/java/fastnotifications/
+â”‚   â”œâ”€â”€ FastNotifications.java       # Main API
+â”‚   â”œâ”€â”€ ProgressNotification.java    # Progress toasts
+â”‚   â”œâ”€â”€ Demo.java                    # Example usage
+â”‚   â””â”€â”€ integrations/
+â”‚       â””â”€â”€ FastRobotDebug.java      # FastRobot integration
+â”œâ”€â”€ installer/
+â”‚   â”œâ”€â”€ WINDOWS_NOTIFICATION_GUIDE.md  # Windows architecture guide
+â”‚   â”œâ”€â”€ sparse-manifest.xml            # Sparse package template
+â”‚   â”œâ”€â”€ create-package.ps1             # Package builder script
+â”‚   â”œâ”€â”€ register-sparse.ps1            # Registration script
+â”‚   â”œâ”€â”€ register-app.reg               # Registry entries
+â”‚   â””â”€â”€ install.ps1                    # Setup automation
+â”œâ”€â”€ compile.bat                      # Native build script
+â”œâ”€â”€ GETTING_STARTED.md               # Quick start guide
+â”œâ”€â”€ REACTION.md                      # Developer notes
+â”œâ”€â”€ pom.xml                          # Maven config
+â””â”€â”€ README.md                        # This file
 ```
 
 ---
@@ -411,31 +412,31 @@ FastNotification/
 | [`installer/WINDOWS_NOTIFICATION_GUIDE.md`](installer/WINDOWS_NOTIFICATION_GUIDE.md) | Windows notification architecture & decision guide |
 
 **Quick Navigation:**
-- Just want to test? → [Level 1 in GETTING_STARTED.md](GETTING_STARTED.md#level-1--quick-test-5-min)
-- Building for production? → [Level 2 in GETTING_STARTED.md](GETTING_STARTED.md#level-2--production-setup-2-hours)
-- Understanding Windows quirks? → [WINDOWS_NOTIFICATION_GUIDE.md](installer/WINDOWS_NOTIFICATION_GUIDE.md)
+- Just want to test? â†’ [Level 1 in GETTING_STARTED.md](GETTING_STARTED.md#level-1--quick-test-5-min)
+- Building for production? â†’ [Level 2 in GETTING_STARTED.md](GETTING_STARTED.md#level-2--production-setup-2-hours)
+- Understanding Windows quirks? â†’ [WINDOWS_NOTIFICATION_GUIDE.md](installer/WINDOWS_NOTIFICATION_GUIDE.md)
 
 ---
 
 ## License
 
-MIT License — See [LICENSE](LICENSE) for details.
+MIT License â€” See [LICENSE](LICENSE) for details.
 
 ---
 
-**FastNotifications** — *Part of the FastJava Ecosystem*  
-- [FastCore](https://github.com/andrestubbe/FastCore) — JNI loader  
-- [FastRobot](https://github.com/andrestubbe/FastRobot) — Ultra-fast automation  
+**FastNotifications** â€” *Part of the FastJava Ecosystem*  
+- [FastCore](https://github.com/andrestubbe/FastCore) â€” JNI loader  
+- [FastRobot](https://github.com/andrestubbe/FastRobot) â€” Ultra-fast automation  
 - More at [github.com/andrestubbe](https://github.com/andrestubbe)
 
 ---
 
 ## Related Projects
 
-- [FastRobot](https://github.com/andrestubbe/FastRobot) — Ultra-fast screen capture & automation
-- [FastTheme](https://github.com/andrestubbe/FastTheme) — OS-aware theme detection
-- [FastHotkey](https://github.com/andrestubbe/FastHotkey) — Global system hotkeys
-- [FastClipboard](https://github.com/andrestubbe/FastClipboard) — Native clipboard access
+- [FastRobot](https://github.com/andrestubbe/FastRobot) â€” Ultra-fast screen capture & automation
+- [FastTheme](https://github.com/andrestubbe/FastTheme) â€” OS-aware theme detection
+- [FastHotkey](https://github.com/andrestubbe/FastHotkey) â€” Global system hotkeys
+- [FastClipboard](https://github.com/andrestubbe/FastClipboard) â€” Native clipboard access
 
 ---
 
