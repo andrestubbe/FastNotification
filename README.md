@@ -1,5 +1,16 @@
-﻿# FastNotification — Native Windows toast notifications for Java [ALPHA] - v0.1.0
+﻿# FastNotification v0.1.0 [ALPHA] — Native Windows toast notifications for Java
+
+[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastNotification/releases/tag/v0.1.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
+[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
+
 **⚡ Ultra-fast native Java notifications — Replace ugly Java SystemTray with real OS-native Toasts**
+
+FastNotifications is a high-performance native notification library for Java** that replaces the ugly, limited `java.awt.SystemTray` with real OS-native notifications. Built for Windows 11 native WinRT Toasts with full customization.
+
+[![FastKeyboard Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
 
 ```java
 // Quick Start — Native Windows 11 Toast
@@ -16,18 +27,6 @@ FastNotifications.builder()
     .timeout(Duration.seconds(5))
     .show();
 ```
-
-**FastNotifications** is a **high-performance native notification library for Java** that replaces the ugly, limited `java.awt.SystemTray` with **real OS-native notifications**. Built for **Windows 11 native WinRT Toasts** with full customization.
-
-> **Powered by FastCore** — Part of the FastJava ecosystem for native JVM acceleration.
-
-**Keywords:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, cross platform notifications java, java desktop notifications, java notification library
-
-[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastNotification/releases/tag/v0.1.0)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
-[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
 ---
 
@@ -160,13 +159,16 @@ FastNotification offers **3 integration levels** for different needs:
 ### Level 1 — Quick Test (5 min)
 
 ```bash
-# 1. Build native DLL [ALPHA] - v0.1.0
+# 1. Build native DLL
+ [ALPHA] - v0.1.0
 compile.bat
 
-# 2. Compile Java [ALPHA] - v0.1.0
+# 2. Compile Java
+ [ALPHA] - v0.1.0
 mvn compile
 
-# 3. Run demo [ALPHA] - v0.1.0
+# 3. Run demo
+ [ALPHA] - v0.1.0
 java --% -cp "target\classes" -Djava.library.path="native" --enable-native-access=ALL-UNNAMED fastnotifications.Demo
 ```
 
@@ -418,28 +420,16 @@ FastNotification/
 ---
 
 ## License
-
-MIT License — See [LICENSE](LICENSE) for details.
-
----
-
-**FastNotifications** — *Part of the FastJava Ecosystem*  
-- [FastCore](https://github.com/andrestubbe/FastCore) — JNI loader  
-- [FastRobot](https://github.com/andrestubbe/FastRobot) — Ultra-fast automation  
-- More at [github.com/andrestubbe](https://github.com/andrestubbe)
+MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Related Projects
-
-- [FastRobot](https://github.com/andrestubbe/FastRobot) — Ultra-fast screen capture & automation
-- [FastTheme](https://github.com/andrestubbe/FastTheme) — OS-aware theme detection
-- [FastHotkey](https://github.com/andrestubbe/FastHotkey) — Global system hotkeys
-- [FastClipboard](https://github.com/andrestubbe/FastClipboard) — Native clipboard access
+- [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader for Java
+- [FastKeyboard](https://github.com/andrestubbe/FastKeyboard) — High-performance RawInput engine
+- [FastTheme](https://github.com/andrestubbe/FastTheme) — Advanced UI styling engine
 
 ---
+**Part of the FastJava Ecosystem** — *Making the JVM faster.*
 
-## Keywords
-
-**SEO Tags:** java notifications, windows toast java, java system tray alternative, native notifications java, winrt toast java, jni notifications, java desktop notifications, java notification library, java windows 11 toast, java winrt notifications
 
