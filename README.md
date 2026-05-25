@@ -8,25 +8,12 @@
 
 **⚡ Ultra-fast native Java notifications — Replace ugly Java SystemTray with real OS-native Toasts**
 
-FastNotifications is a high-performance native notification library for Java** that replaces the ugly, limited `java.awt.SystemTray` with real OS-native notifications. Built for Windows 11 native WinRT Toasts with full customization.
+FastNotifications is a high-performance native notification library for Java** that replaces the ugly, limited
+`java.awt.SystemTray` with real OS-native notifications. Built for Windows 11 native WinRT Toasts with full
+customization.
 
 [![FastKeyboard Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
 
-```java
-// Quick Start — Native Windows 11 Toast
-FastNotifications.notify("Build finished", "FastImage compiled in 42ms");
-
-// Full control — Custom icon, action buttons, urgency
-FastNotifications.builder()
-    .title("Download complete")
-    .message("File saved to /downloads")
-    .icon("fastjava.png")           // Your app icon, not Java coffee cup
-    .urgency(Urgency.HIGH)
-    .action("Open", this::openFile)
-    .action("Dismiss", null)
-    .timeout(Duration.seconds(5))
-    .show();
-```
 
 ---
 
@@ -46,23 +33,47 @@ FastNotifications.builder()
 
 ---
 
+## Quick Start
+
+```java
+// Quick Start — Native Windows 11 Toast
+FastNotifications.notify("Build finished","FastImage compiled in 42ms");
+
+// Full control — Custom icon, action buttons, urgency
+FastNotifications.builder()
+    .title("Download complete")
+    .message("File saved to /downloads")
+    .icon("fastjava.png")           // Your app icon, not Java coffee cup
+    .urgency(Urgency.HIGH)
+    .action("Open", this::openFile)
+    .action("Dismiss", null)
+    .timeout(Duration.seconds(5))
+        .show();
+
+```
+
+---
+
 ## Why FastNotifications?
 
 `java.awt.SystemTray` notifications are:
+
 - **Ugly** — Always shows the Java coffee cup icon
 - **Limited** — No action buttons, no progress bars, no priorities
 - **Deprecated** — Uses old balloon API on Windows
 - **Inconsistent** — Looks different on every OS
 
-**Plus:** Windows 10/11 requires app registration for modern notifications — FastNotifications handles this with **3 integration levels**:
+**Plus:** Windows 10/11 requires app registration for modern notifications — FastNotifications handles this with **3
+integration levels**:
 
-| Level | Effort | Result |
-|-------|--------|--------|
-| **Level 1** (5 min) | Build DLL → Run | Basic notifications (Balloon) |
-| **Level 2** (2 hrs) | + Sparse Package | Full WinRT Toasts (like Teams) |
-| **Level 3** (3-10 days) | + MSIX + Store | Store distribution |
+| Level                   | Effort           | Result                         |
+|-------------------------|------------------|--------------------------------|
+| **Level 1** (5 min)     | Build DLL → Run  | Basic notifications (Balloon)  |
+| **Level 2** (2 hrs)     | + Sparse Package | Full WinRT Toasts (like Teams) |
+| **Level 3** (3-10 days) | + MSIX + Store   | Store distribution             |
 
 FastNotifications solves this with:
+
 - **Flexible integration** — Choose your setup level
 - **Native OS integration** — Real Windows 11 WinRT Toasts (Level 2+)
 - **Custom app icons** — Your logo, not Java's
@@ -84,22 +95,24 @@ FastNotifications solves this with:
 
 ## FastNotifications vs SystemTray
 
-| Feature | SystemTray | FastNotifications |
-|---------|------------|-------------------|
-| Icon | ❌ Java coffee cup | ✅ Your custom icon |
+| Feature          | SystemTray           | FastNotifications    |
+|------------------|----------------------|----------------------|
+| Icon             | ❌ Java coffee cup    | ✅ Your custom icon   |
 | Windows 11 style | ❌ Deprecated balloon | ✅ Native WinRT Toast |
-| Action buttons | ❌ None | ✅ Custom buttons |
-| Progress bars | ❌ None | ✅ Native progress |
-| Urgency/Priority | ❌ None | ✅ High, Critical |
+| Action buttons   | ❌ None               | ✅ Custom buttons     |
+| Progress bars    | ❌ None               | ✅ Native progress    |
+| Urgency/Priority | ❌ None               | ✅ High, Critical     |
 
 ---
 
 ## Installation
 
 ### Option 1: Maven (Recommended)
+
 Add the JitPack repository and the dependencies to your `pom.xml`:
 
 ```xml
+
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -108,23 +121,24 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 </repositories>
 
 <dependencies>
-    <!-- FastNotification Library -->
-    <dependency>
-        <groupId>com.github.andrestubbe</groupId>
-        <artifactId>fastnotification</artifactId>
-        <version>v0.1.0</version>
-    </dependency>
+<!-- FastNotification Library -->
+<dependency>
+    <groupId>com.github.andrestubbe</groupId>
+    <artifactId>fastnotification</artifactId>
+    <version>v0.1.0</version>
+</dependency>
 
-    <!-- FastCore (Required Native Loader) -->
-    <dependency>
-        <groupId>com.github.andrestubbe</groupId>
-        <artifactId>fastcore</artifactId>
-        <version>v0.1.0</version>
-    </dependency>
+<!-- FastCore (Required Native Loader) -->
+<dependency>
+    <groupId>com.github.andrestubbe</groupId>
+    <artifactId>fastcore</artifactId>
+    <version>v0.1.0</version>
+</dependency>
 </dependencies>
 ```
 
 ### Option 2: Gradle (via JitPack)
+
 ```groovy
 repositories {
     maven { url 'https://jitpack.io' }
@@ -137,24 +151,27 @@ dependencies {
 ```
 
 ### Option 3: Direct Download (No Build Tool)
+
 Download the latest JARs directly to add them to your classpath:
 
-1. 📦 **[fastnotification-v0.1.0.jar](https://github.com/andrestubbe/FastNotification/releases/download/v0.1.0/fastnotification-v0.1.0.jar)** (The Core Library)
-2. ⚙️ **[fastcore-v0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/v0.1.0/fastcore-v0.1.0.jar)** (The Mandatory Native Loader)
+1. 📦 *
+   *[fastnotification-v0.1.0.jar](https://github.com/andrestubbe/FastNotification/releases/download/v0.1.0/fastnotification-v0.1.0.jar)
+   ** (The Core Library)
+2. ⚙️ **[fastcore-v0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/v0.1.0/fastcore-v0.1.0.jar)** (
+   The Mandatory Native Loader)
 
 > [!IMPORTANT]
 > All JARs must be in your classpath for the native JNI calls to function correctly.
-
 
 ## Quick Start — Choose Your Setup Level
 
 FastNotification offers **3 integration levels** for different needs:
 
-| Level | Setup Time | Features | Best For |
-|-------|-----------|----------|----------|
-| **Level 1** | 5 minutes | Basic notifications (Balloon style) | Testing, internal tools |
-| **Level 2** | 2 hours | Full Windows 11 Toasts with actions | Production apps |
-| **Level 3** | 3-10 days | Microsoft Store integration | Store distribution |
+| Level       | Setup Time | Features                            | Best For                |
+|-------------|------------|-------------------------------------|-------------------------|
+| **Level 1** | 5 minutes  | Basic notifications (Balloon style) | Testing, internal tools |
+| **Level 2** | 2 hours    | Full Windows 11 Toasts with actions | Production apps         |
+| **Level 3** | 3-10 days  | Microsoft Store integration         | Store distribution      |
 
 ### Level 1 — Quick Test (5 min)
 
@@ -174,10 +191,11 @@ java --% -cp "target\classes" -Djava.library.path="native" --enable-native-acces
 
 ```java
 // Simple code
-FastNotifications.notify("Hello", "From Java!");
+FastNotifications.notify("Hello","From Java!");
 ```
 
-> ⚠️ **Note:** Windows 10/11 may hide balloon notifications. This is Microsoft's design, not a bug. See [Level 2](#level-2--production-setup) for full toasts.
+> ⚠️ **Note:** Windows 10/11 may hide balloon notifications. This is Microsoft's design, not a bug.
+> See [Level 2](#level-2--production-setup) for full toasts.
 
 ### Level 2 — Production Setup (2 hours)
 
@@ -229,46 +247,76 @@ For Store distribution with auto-updates:
 import fastnotifications.FastNotifications;
 
 // Level 1 & 2: Works with both DLLs
-FastNotifications.notify("Build finished", "Completed in 42ms");
+FastNotifications.notify("Build finished","Completed in 42ms");
 ```
 
 ### Tagged Notifications (Updates Existing)
 
 ```java
 // Show progress that updates in place
-FastNotifications.notifyTagged("download-1", "Downloading", "50%...");
-Thread.sleep(2000);
-FastNotifications.notifyTagged("download-1", "Downloading", "100% - Done!");
+FastNotifications.notifyTagged("download-1","Downloading","50%...");
+Thread.
+
+sleep(2000);
+FastNotifications.
+
+notifyTagged("download-1","Downloading","100% - Done!");
 ```
 
 ### Builder API (Level 2+)
 
 ```java
 FastNotifications.builder()
-    .title("Task Completed")
-    .message("Backup finished successfully")
-    .icon("myapp.png")
-    .urgency(Urgency.NORMAL)
-    .action("View Results", () -> openResults())
-    .action("Close", null)
-    .timeout(Duration.seconds(10))
-    .show();
+    .
+
+title("Task Completed")
+    .
+
+message("Backup finished successfully")
+    .
+
+icon("myapp.png")
+    .
+
+urgency(Urgency.NORMAL)
+    .
+
+action("View Results",() ->
+
+openResults())
+        .
+
+action("Close",null)
+    .
+
+timeout(Duration.seconds(10))
+        .
+
+show();
 ```
 
 ### Progress Notification (Level 2+)
 
 ```java
 ProgressNotification progress = FastNotifications.progress(
-    "Installing", 
-    "FastCore 1.2.0"
+        "Installing",
+        "FastCore 1.2.0"
 );
 
-for (int i = 0; i <= 100; i += 10) {
-    progress.update(i);
-    Thread.sleep(100);
+for(
+int i = 0;
+i <=100;i +=10){
+        progress.
+
+update(i);
+    Thread.
+
+sleep(100);
 }
 
-progress.complete("Installation finished");
+        progress.
+
+complete("Installation finished");
 ```
 
 ---
@@ -277,36 +325,36 @@ progress.complete("Installation finished");
 
 ### Core Methods
 
-| Method | Description | Status |
-|--------|-------------|--------|
-| `notify(title, message)` | Simple toast notification | ✅ Working |
-| `notify(title, message, icon)` | Toast with custom icon | ✅ Working |
-| `notifyTagged(tag, title, message)` | Tagged notification (replaces existing) | ✅ Working |
-| `notifyTagged(tag, title, message, icon)` | Tagged with icon | ✅ Working |
-| `builder()` | Create advanced notification | ✅ Working |
-| `progress(title, message)` | Progress notification | 🚧 Planned |
+| Method                                    | Description                             | Status     |
+|-------------------------------------------|-----------------------------------------|------------|
+| `notify(title, message)`                  | Simple toast notification               | ✅ Working  |
+| `notify(title, message, icon)`            | Toast with custom icon                  | ✅ Working  |
+| `notifyTagged(tag, title, message)`       | Tagged notification (replaces existing) | ✅ Working  |
+| `notifyTagged(tag, title, message, icon)` | Tagged with icon                        | ✅ Working  |
+| `builder()`                               | Create advanced notification            | ✅ Working  |
+| `progress(title, message)`                | Progress notification                   | 🚧 Planned |
 
 ### NotificationBuilder
 
-| Method | Description |
-|--------|-------------|
-| `tag(String id)` | Unique identifier (replaces existing with same tag) |
-| `title(String text)` | Notification title |
-| `message(String text)` | Body text |
-| `icon(String path)` | PNG icon path (replaces Java coffee cup) |
-| `urgency(Urgency)` | LOW, NORMAL, HIGH, CRITICAL |
-| `timeout(Duration)` | Auto-dismiss timeout |
-| `action(String, Runnable)` | Add button with callback |
-| `show()` | Display notification |
+| Method                     | Description                                         |
+|----------------------------|-----------------------------------------------------|
+| `tag(String id)`           | Unique identifier (replaces existing with same tag) |
+| `title(String text)`       | Notification title                                  |
+| `message(String text)`     | Body text                                           |
+| `icon(String path)`        | PNG icon path (replaces Java coffee cup)            |
+| `urgency(Urgency)`         | LOW, NORMAL, HIGH, CRITICAL                         |
+| `timeout(Duration)`        | Auto-dismiss timeout                                |
+| `action(String, Runnable)` | Add button with callback                            |
+| `show()`                   | Display notification                                |
 
 ### Urgency Levels
 
-| Level | Windows Behavior |
-|-------|-----------------|
-| `LOW` | Quiet notification, no sound |
-| `NORMAL` | Standard toast |
-| `HIGH` | Persistent, shows on lock screen |
-| `CRITICAL` | Forces immediate attention |
+| Level      | Windows Behavior                 |
+|------------|----------------------------------|
+| `LOW`      | Quiet notification, no sound     |
+| `NORMAL`   | Standard toast                   |
+| `HIGH`     | Persistent, shows on lock screen |
+| `CRITICAL` | Forces immediate attention       |
 
 ---
 
@@ -328,7 +376,9 @@ FastRobotDebug.enable();
 // - "📸 Screen Capture: 1920x1080 in 12ms"
 
 // Show session summary
-FastRobotDebug.showSummary();
+FastRobotDebug.
+
+showSummary();
 ```
 
 See [FastRobotDebug.java](src/main/java/fastnotifications/integrations/FastRobotDebug.java) for full API.
@@ -343,12 +393,12 @@ See [COMPILE.md](COMPILE.md) for detailed build instructions.
 
 ## Platform Support
 
-| Platform | Version | Status | Notes |
-|----------|---------|--------|-------|
-| Windows 11 | v1.0 | ✅ Full support | WinRT Toast XML, all features |
-| Windows 10 | v1.0 | ⚠️ Partial | Requires v1903+, some features limited |
-| macOS | — | ❌ Not planned | Use native macOS notifications |
-| Linux | — | ❌ Not planned | Use DBus directly |
+| Platform   | Version | Status         | Notes                                  |
+|------------|---------|----------------|----------------------------------------|
+| Windows 11 | v1.0    | ✅ Full support | WinRT Toast XML, all features          |
+| Windows 10 | v1.0    | ⚠️ Partial     | Requires v1903+, some features limited |
+| macOS      | —       | ❌ Not planned  | Use native macOS notifications         |
+| Linux      | —       | ❌ Not planned  | Use DBus directly                      |
 
 **Windows-only by design** — We focus on maximum performance on the most common platform.
 
@@ -367,6 +417,7 @@ Windows 11 Notification Center
 ```
 
 **Key Technologies:**
+
 - **JNI** — Java-to-native bridge
 - **WinRT** — Windows Runtime API for Toasts
 - **FastCore** — Native library loading (optional dependency)
@@ -407,12 +458,13 @@ FastNotification/
 
 ## Documentation
 
-| Document | Purpose |
-|----------|---------|
-| [`GETTING_STARTED.md`](GETTING_STARTED.md) | Quick setup guide with 3 integration levels |
+| Document                                                                             | Purpose                                            |
+|--------------------------------------------------------------------------------------|----------------------------------------------------|
+| [`GETTING_STARTED.md`](GETTING_STARTED.md)                                           | Quick setup guide with 3 integration levels        |
 | [`installer/WINDOWS_NOTIFICATION_GUIDE.md`](installer/WINDOWS_NOTIFICATION_GUIDE.md) | Windows notification architecture & decision guide |
 
 **Quick Navigation:**
+
 - Just want to test? → [Level 1 in GETTING_STARTED.md](GETTING_STARTED.md#level-1--quick-test-5-min)
 - Building for production? → [Level 2 in GETTING_STARTED.md](GETTING_STARTED.md#level-2--production-setup-2-hours)
 - Understanding Windows quirks? → [WINDOWS_NOTIFICATION_GUIDE.md](installer/WINDOWS_NOTIFICATION_GUIDE.md)
@@ -420,11 +472,13 @@ FastNotification/
 ---
 
 ## License
+
 MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Related Projects
+
 - [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader for Java
 - [FastKeyboard](https://github.com/andrestubbe/FastKeyboard) — High-performance RawInput engine
 - [FastTheme](https://github.com/andrestubbe/FastTheme) — Advanced UI styling engine
