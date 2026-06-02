@@ -387,7 +387,7 @@ See [FastRobotDebug.java](src/main/java/fastnotifications/integrations/FastRobot
 
 ## Build from Source
 
-See [COMPILE.md](COMPILE.md) for detailed build instructions.
+See [COMPILE.md](docs/COMPILE.md) for detailed build instructions.
 
 ---
 
@@ -460,23 +460,23 @@ FastNotification/
 
 | Document                                                                             | Purpose                                            |
 |--------------------------------------------------------------------------------------|----------------------------------------------------|
-| [`GETTING_STARTED.md`](GETTING_STARTED.md)                                           | Quick setup guide with 3 integration levels        |
+| [`GETTING_STARTED.md`](docs/GETTING_STARTED.md)                                           | Quick setup guide with 3 integration levels        |
 | [`installer/WINDOWS_NOTIFICATION_GUIDE.md`](installer/WINDOWS_NOTIFICATION_GUIDE.md) | Windows notification architecture & decision guide |
 
 **Quick Navigation:**
 
-- Just want to test? → [Level 1 in GETTING_STARTED.md](GETTING_STARTED.md#level-1--quick-test-5-min)
-- Building for production? → [Level 2 in GETTING_STARTED.md](GETTING_STARTED.md#level-2--production-setup-2-hours)
+- Just want to test? → [Level 1 in GETTING_STARTED.md](docs/GETTING_STARTED.md#level-1--quick-test-5-min)
+- Building for production? → [Level 2 in GETTING_STARTED.md](docs/GETTING_STARTED.md#level-2--production-setup-2-hours)
 - Understanding Windows quirks? → [WINDOWS_NOTIFICATION_GUIDE.md](installer/WINDOWS_NOTIFICATION_GUIDE.md)
 
 ---
 
 ## Documentation
 
-* **[COMPILE.md](COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
-* **[REFERENCE.md](REFERENCE.md)**: Full API descriptions, border configurations, and codepoint index.
-* **[PHILOSOPHIE.md](PHILOSOPHIE.md)**: The engineering rationale for zero-allocation performance.
-* **[ROADMAP.md](ROADMAP.md)**: Future milestones and planned features.
+* **[COMPILE.md](docs/COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
+* **[REFERENCE.md](docs/REFERENCE.md)**: Full API descriptions, border configurations, and codepoint index.
+* **[PHILOSOPHIE.md](docs/PHILOSOPHIE.md)**: The engineering rationale for zero-allocation performance.
+* **[ROADMAP.md](docs/ROADMAP.md)**: Future milestones and planned features.
 
 ---
 
