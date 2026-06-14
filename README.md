@@ -1,4 +1,4 @@
-# FastNotification 0.1.0 [ALPHA]  Native Windows toast notifications for Java
+# FastNotification 0.1.0 [ALPHA-2026-06] — Native Windows toast notifications for Java
 
 [![Status](https://img.shields.io/badge/status-0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastNotification/releases/tag/0.1.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
