@@ -16,22 +16,6 @@ customization.
 
 ---
 
-## Table of Contents
-
-- [Why FastNotifications?](#why-fastnotifications)
-- [Key Features](#key-features)
-- [FastNotifications vs SystemTray](#fastnotifications-vs-systemtray)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [API Reference](#api-reference)
-- [Integrations](#integrations)
-- [Platform Support](#platform-support)
-- [Documentation](#documentation)
-- [License](#license)
-- [Related Projects](#related-projects)
-
----
-
 ## Quick Start
 
 ```java
@@ -51,6 +35,25 @@ FastNotifications.builder()
 ```
 
 ---
+
+---
+
+## Table of Contents
+
+- [Why FastNotifications?](#why-fastnotifications)
+- [Key Features](#key-features)
+- [FastNotifications vs SystemTray](#fastnotifications-vs-systemtray)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+- [Integrations](#integrations)
+- [Platform Support](#platform-support)
+- [Documentation](#documentation)
+- [License](#license)
+- [Related Projects](#related-projects)
+
+---
+
 
 ## Why FastNotifications?
 
