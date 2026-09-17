@@ -53,7 +53,7 @@ public class Demo {
 - [API Reference](#api-reference)
 - [Technical Demos & Benchmarks](#technical-demos--benchmarks)
 - [Installation](#installation)
-- [Quick Start](#quick-start)
+- [Deployment & Packaging Guide](#deployment--packaging-guide)
 - [Documentation](#documentation)
 - [Platform Support](#platform-support)
 - [License](#license)
@@ -188,9 +188,9 @@ Download the latest JARs directly to add them to your classpath:
 
 ---
 
-## Quick Start — Choose Your Setup Level
+## Deployment & Packaging Guide
 
-FastNotification offers **3 integration levels**:
+FastNotification offers **3 deployment levels** depending on OS packaging requirements:
 
 | Level | Setup Time | Features | Best For |
 |-------------|------------|-------------------------------------|-------------------------|
