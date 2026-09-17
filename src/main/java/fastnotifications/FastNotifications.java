@@ -37,7 +37,6 @@ import java.time.Duration;
  * 
  * @author Andre Stubbe
  * @version 1.0.0-alpha
- * @see fastnotifications.integrations.FastRobotDebug
  */
 public class FastNotifications {
     

@@ -19,19 +19,26 @@ customization.
 ## Quick Start
 
 ```java
-// Quick notification
-FastNotifications.notify("Build finished", "FastImage compiled in 42ms");
+import fastnotifications.FastNotifications;
+import java.time.Duration;
 
-// Full control — custom icon, action buttons, urgency
-FastNotifications.builder()
-    .title("Download complete")
-    .message("File saved to /downloads")
-    .icon("fastjava.png")
-    .urgency(Urgency.HIGH)
-    .action("Open", this::openFile)
-    .action("Dismiss", null)
-    .timeout(Duration.seconds(5))
-    .show();
+public class Demo {
+    public static void main(String[] args) throws Exception {
+        // 1. Quick notification
+        FastNotifications.notify("Build finished", "FastImage compiled in 42ms");
+
+        // 2. Full control — custom icon, action buttons, urgency
+        FastNotifications.builder()
+            .title("Download complete")
+            .message("File saved to /downloads")
+            .icon("fastjava.png")
+            .urgency(FastNotifications.Urgency.HIGH)
+            .action("Open", () -> System.out.println("Opening file..."))
+            .action("Dismiss", null)
+            .timeout(Duration.ofSeconds(5))
+            .show();
+    }
+}
 ```
 
 ---
@@ -47,7 +54,6 @@ FastNotifications.builder()
 - [Technical Demos & Benchmarks](#technical-demos--benchmarks)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
-- [Integrations](#integrations)
 - [Documentation](#documentation)
 - [Platform Support](#platform-support)
 - [License](#license)
@@ -262,20 +268,6 @@ Run standalone verification demos or execute JMH throughput microbenchmarks:
 |:---|:---|:---|:---|
 | **Interactive Demo** | [`run-demo.bat`](run-demo.bat) | [`Demo.java`](src/main/java/fastnotifications/Demo.java) | End-to-end verification of native balloon/toast notifications and builder fluent API |
 | **Throughput Benchmark** | [`run-benchmark.bat`](run-benchmark.bat) | [`Benchmark.java`](examples/Benchmark/src/main/java/fastnotifications/benchmark/Benchmark.java) | JMH microbenchmark suite measuring zero-GC notification builder instantiation and dispatch throughput |
-
----
-
-## Integrations
-
-### FastRobot Debug Mode
-
-```java
-import fastnotifications.integrations.FastRobotDebug;
-
-FastRobotDebug.enable();
-// All FastRobot actions now show toasts
-FastRobotDebug.showSummary();
-```
 
 ---
 
