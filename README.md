@@ -50,7 +50,7 @@ public class Demo {
 - [Real-World Use Cases](#real-world-use-cases)
 - [Performance Benchmarks](#performance-benchmarks)
 - [Integration Levels](#integration-levels)
-- [API Reference](#api-reference)
+- [API Quick Reference](#api-quick-reference)
 - [Technical Demos & Benchmarks](#technical-demos--benchmarks)
 - [Installation](#installation)
 - [Deployment & Packaging Guide](#deployment--packaging-guide)
@@ -233,30 +233,29 @@ FastNotifications.builder()
 
 ---
 
-## API Reference
+## API Quick Reference
 
-### Core Methods
-
-| Method | Description | Status |
-|-------------------------------------------|------------------------------------------|------------|
-| `notify(title, message)` | Simple toast notification | ✅ Working |
-| `notify(title, message, icon)` | Toast with custom icon | ✅ Working |
-| `notifyTagged(tag, title, message)` | Tagged notification (replaces existing) | ✅ Working |
-| `builder()` | Create advanced notification | ✅ Working |
-| `progress(title, message)` | Progress notification | 🚧 Planned |
+### Core Static API
+| Method | Return Type | Description | Docs |
+|:---|:---|:---|:---|
+| `FastNotifications.notify(title, message)` | `void` | Display a simple native toast/balloon notification. | [Reference](docs/REFERENCE.md) |
+| `FastNotifications.notify(title, message, icon)` | `void` | Display a notification with a custom PNG icon. | [Reference](docs/REFERENCE.md) |
+| `FastNotifications.notifyTagged(tag, title, message)` | `void` | Display or update a notification by unique tag. | [Reference](docs/REFERENCE.md) |
+| `FastNotifications.notifyTagged(tag, title, message, icon)` | `void` | Display or update tagged notification with icon. | [Reference](docs/REFERENCE.md) |
+| `FastNotifications.builder()` | `NotificationBuilder` | Create a fluent builder for advanced options. | [Reference](docs/REFERENCE.md) |
+| `FastNotifications.progress(title, message)` | `ProgressNotification` | Create a live progress notification (planned). | [Reference](docs/REFERENCE.md) |
 
 ### NotificationBuilder
-
-| Method | Description |
-|----------------------------|-----------------------------------------------------|
-| `tag(String id)` | Unique identifier (replaces existing with same tag) |
-| `title(String text)` | Notification title |
-| `message(String text)` | Body text |
-| `icon(String path)` | PNG icon path |
-| `urgency(Urgency)` | LOW, NORMAL, HIGH, CRITICAL |
-| `timeout(Duration)` | Auto-dismiss timeout |
-| `action(String, Runnable)` | Add button with callback |
-| `show()` | Display notification |
+| Method | Return Type | Description | Docs |
+|:---|:---|:---|:---|
+| `tag(String id)` | `NotificationBuilder` | Set unique tag to update/replace existing notification. | [Reference](docs/REFERENCE.md) |
+| `title(String text)` | `NotificationBuilder` | Set notification title text. | [Reference](docs/REFERENCE.md) |
+| `message(String text)` | `NotificationBuilder` | Set notification body content. | [Reference](docs/REFERENCE.md) |
+| `icon(String path)` | `NotificationBuilder` | Attach custom PNG icon to the toast. | [Reference](docs/REFERENCE.md) |
+| `urgency(Urgency)` | `NotificationBuilder` | Set priority level (`LOW`, `NORMAL`, `HIGH`, `CRITICAL`). | [Reference](docs/REFERENCE.md) |
+| `timeout(Duration)` | `NotificationBuilder` | Auto-dismiss timer duration. | [Reference](docs/REFERENCE.md) |
+| `action(String, Runnable)` | `NotificationBuilder` | Register interactive button callback. | [Reference](docs/REFERENCE.md) |
+| `show()` | `void` | Dispatch notification to the native OS shell. | [Reference](docs/REFERENCE.md) |
 
 ---
 
