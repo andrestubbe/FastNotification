@@ -64,6 +64,13 @@ FastNotifications.builder()
 - **Deprecated** — Uses old balloon API on Windows
 - **Inconsistent** — Looks different on every OS
 
+| Feature | java.awt.SystemTray | notify-send / PowerShell | FastNotifications |
+|:---|:---|:---|:---|
+| **Windows Style** | Deprecated Win32 balloon tooltip | Spawns external PowerShell process | **Native WinRT XML Toast** |
+| **App Branding** | Forced Java coffee cup icon | Generic shell icon | **Custom application identity & logo** |
+| **Interactive Buttons** | Not supported | Complex script parameters | **Custom action buttons & callbacks** |
+| **Progress & Urgency** | Not supported | Not supported | **Live progress bars & urgency levels** |
+
 **FastNotifications** supports **3 integration levels**:
 
 | Level | Effort | Result |
