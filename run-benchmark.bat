@@ -2,21 +2,29 @@
 setlocal
 chcp 65001 > nul
 cd /d "%~dp0"
-set "MAVEN_OPTS=--enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dorg.slf4j.simpleLogger.defaultLogLevel=warn"
 
 echo ===================================================
-echo  Building FastNotification ^& JMH Benchmarks Uber-Jar
+echo  Building FastNotification Native & Main Project
 echo ===================================================
+call compile.bat
+if %ERRORLEVEL% NEQ 0 (
+    echo [ERROR] Native build failed!
+    pause
+    exit /b %ERRORLEVEL%
+)
 
-call mvn -q clean install -DskipTests 2>nul
+call mvn clean install -DskipTests -q
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] FastNotification install failed!
     pause
     exit /b %ERRORLEVEL%
 )
 
+echo ===================================================
+echo  Building JMH Benchmark Uber-JAR
+echo ===================================================
 cd examples\Benchmark
-call mvn -q clean package 2>nul
+call mvn clean package -DskipTests -q
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] Benchmark packaging failed!
     pause
@@ -26,5 +34,6 @@ if %ERRORLEVEL% NEQ 0 (
 echo ===================================================
 echo  Running JMH Benchmarks (Throughput: ops/ms)
 echo ===================================================
-java --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow "-Djava.library.path=..\..\native;native;target\classes" -jar target\benchmarks.jar -f 1 -wi 2 -i 3 -tu ms -bm thrpt
+java --enable-preview -Djava.library.path=..\..\release;..\..\native;..\..\src\main\resources\native -jar target\benchmarks.jar -f 1 -wi 2 -i 3 -tu ms -bm thrpt
+cd ..\..
 pause

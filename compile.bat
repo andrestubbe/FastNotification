@@ -1,77 +1,86 @@
 @echo off
-REM Compile FastNotification Native DLL
-REM Requires: Visual Studio 2022, Windows SDK
+setlocal enabledelayedexpansion
+set PROJECT_NAME=fastnotification
 
-echo Building FastNotification native DLL...
-echo.
-echo Choose implementation:
-echo   [Default] COM/Balloon - Works with all desktop apps, no MSIX needed
-echo   [Option]  WinRT - Full modern toasts, requires MSIX or Sparse Package
-echo.
-echo To build WinRT version, edit this file and uncomment the WinRT lines.
-echo See installer\WINDOWS_NOTIFICATION_GUIDE.md for details.
-echo.
+echo ===================================================
+echo FastNotification Native Builder (FastJava Standard)
+echo ===================================================
 
-REM Set up Visual Studio environment
-set VS_PATH=C:\Program Files\Microsoft Visual Studio\2022\Community
-if not exist "%VS_PATH%" (
-    set VS_PATH=C:\Program Files\Microsoft Visual Studio\2022\Professional
-)
-if not exist "%VS_PATH%" (
-    set VS_PATH=C:\Program Files\Microsoft Visual Studio\2022\Enterprise
-)
-if not exist "%VS_PATH%" (
-    set "VS_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2022\Community"
-)
-if not exist "%VS_PATH%" (
-    set "VS_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2022\Professional"
-)
-if not exist "%VS_PATH%" (
-    set "VS_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise"
-)
-if not exist "%VS_PATH%" (
-    set "VS_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools"
-)
-
-call "%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
-
-REM Auto-detect Java if JAVA_HOME not set
-if "%JAVA_HOME%"=="" (
-    if exist "C:\Program Files\Java\jdk-25" (
-        set "JAVA_HOME=C:\Program Files\Java\jdk-25"
-    ) else if exist "C:\Program Files\Java\jdk-17" (
-        set "JAVA_HOME=C:\Program Files\Java\jdk-17"
-    ) else if exist "C:\Program Files\Java\jdk-21" (
-        set "JAVA_HOME=C:\Program Files\Java\jdk-21"
+:: Auto-detect Visual Studio via vswhere
+set "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
+if exist "!VSWHERE!" (
+    for /f "usebackq tokens=*" %%i in (`"!VSWHERE!" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do (
+        set "VS_PATH=%%i"
     )
 )
 
-echo Using JAVA_HOME: %JAVA_HOME%
+if not defined VS_PATH (
+    if exist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvars64.bat" (
+        set "VS_PATH=C:\Program Files\Microsoft Visual Studio\18\Community"
+    ) else if exist "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat" (
+        set "VS_PATH=C:\Program Files\Microsoft Visual Studio\2022\Community"
+    ) else if exist "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat" (
+        set "VS_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools"
+    )
+)
 
-REM Choose implementation: WinRT (modern) or COM (desktop compatible)
-REM Default: COM version for maximum compatibility
-set SOURCE_FILE=native\FastNotification_COM.cpp
-set EXTRA_LIBS=shell32.lib ole32.lib uuid.lib user32.lib gdi32.lib
+if not defined VS_PATH (
+    echo ERROR: Visual Studio not found!
+    exit /b 1
+)
 
-REM Uncomment for WinRT version (requires MSIX/APPX):
-REM set SOURCE_FILE=native\FastNotification.cpp
-REM set EXTRA_LIBS=runtimeobject.lib
+echo Found Visual Studio at: !VS_PATH!
 
-echo Building: %SOURCE_FILE%
+:: Detect JAVA_HOME
+if not defined JAVA_HOME (
+    if exist "C:\Program Files\Java\jdk-21.0.12.1" (
+        set "JAVA_HOME=C:\Program Files\Java\jdk-21.0.12.1"
+    ) else if exist "C:\Program Files\Java\jdk-25" (
+        set "JAVA_HOME=C:\Program Files\Java\jdk-25"
+    ) else if exist "C:\Program Files\Java\jdk-17" (
+        set "JAVA_HOME=C:\Program Files\Java\jdk-17"
+    )
+)
 
-REM Compile
+if not defined JAVA_HOME (
+    echo ERROR: JAVA_HOME not found!
+    exit /b 1
+)
+
+echo Using JAVA_HOME: !JAVA_HOME!
+
+call "!VS_PATH!\VC\Auxiliary\Build\vcvars64.bat"
+
+if not exist release mkdir release
+if not exist native mkdir native
+if not exist src\main\resources\native mkdir src\main\resources\native
+if not exist src\main\resources\win32-x86-64 mkdir src\main\resources\win32-x86-64
+set "FASTCORE_DIR=%USERPROFILE%\.fastcore\native\%PROJECT_NAME%"
+if not exist "!FASTCORE_DIR!" mkdir "!FASTCORE_DIR!"
+
+echo.
+echo Compiling C++ Native Library (COM/Balloon)...
 cl.exe /EHsc /O2 /MD /LD /std:c++17 ^
-    /I"%JAVA_HOME%\include" /I"%JAVA_HOME%\include\win32" ^
-    /Fe:native\FastNotification.dll ^
-    %SOURCE_FILE% ^
-    %EXTRA_LIBS% ^
+    /I"!JAVA_HOME!\include" /I"!JAVA_HOME!\include\win32" ^
+    /Fe:release\%PROJECT_NAME%.dll ^
+    native\FastNotification_COM.cpp ^
+    shell32.lib ole32.lib uuid.lib user32.lib gdi32.lib ^
     /link /DLL /DEF:native\FastNotification.def /MACHINE:X64 /OPT:REF /OPT:ICF
 
-if %ERRORLEVEL% == 0 (
-    echo Build successful!
-    echo Output: native\FastNotification.dll
-    exit /b 0
+if %ERRORLEVEL% EQU 0 (
+    copy /Y release\%PROJECT_NAME%.dll native\%PROJECT_NAME%.dll >nul
+    copy /Y release\%PROJECT_NAME%.dll native\FastNotification.dll >nul
+    copy /Y release\%PROJECT_NAME%.dll src\main\resources\native\%PROJECT_NAME%.dll >nul
+    copy /Y release\%PROJECT_NAME%.dll src\main\resources\win32-x86-64\%PROJECT_NAME%.dll >nul
+    copy /Y release\%PROJECT_NAME%.dll "!FASTCORE_DIR!\%PROJECT_NAME%.dll" >nul
+    powershell -NoProfile -Command "Unblock-File -Path '!FASTCORE_DIR!\%PROJECT_NAME%.dll', 'release\%PROJECT_NAME%.dll', 'native\%PROJECT_NAME%.dll', 'src\main\resources\native\%PROJECT_NAME%.dll' -ErrorAction SilentlyContinue" >nul 2>&1
+    echo.
+    echo ===========================================
+    echo [SUCCESS] FastNotification native DLL built!
+    echo Copied to release\, native\, resources\, and .fastcore
+    echo ===========================================
 ) else (
-    echo Build failed!
+    echo.
+    echo !!!!!!!!! BUILD FAILED !!!!!!!!!
     exit /b 1
 )
