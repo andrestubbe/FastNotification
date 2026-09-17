@@ -41,8 +41,8 @@ FastNotifications.builder()
 ## Table of Contents
 
 - [Why FastNotifications?](#why-fastnotifications)
+- [Integration Levels](#integration-levels)
 - [Key Features](#key-features)
-- [FastNotifications vs SystemTray](#fastnotifications-vs-systemtray)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [API Reference](#api-reference)
@@ -57,12 +57,14 @@ FastNotifications.builder()
 
 ## Why FastNotifications?
 
-`java.awt.SystemTray` notifications are:
+Standard `java.awt.SystemTray` notifications suffer from fundamental architectural and visual limitations:
 
-- **Ugly** — Always shows the Java coffee cup icon
-- **Limited** — No action buttons, no progress bars, no priorities
-- **Deprecated** — Uses old balloon API on Windows
-- **Inconsistent** — Looks different on every OS
+- **Ugly App Branding** — Hardcoded to display the legacy Java coffee cup icon instead of custom application identities.
+- **Severely Limited Capabilities** — No interactive action buttons, no live progress bars, and no OS urgency levels.
+- **Deprecated Windows Backend** — Relies on legacy Win32 balloon tooltips that modern Windows versions suppress.
+- **Visual Inconsistency** — Renders unpredictably across different desktop platforms.
+
+**FastNotifications** solves this by hooking directly into the modern Windows WinRT Notification subsystem:
 
 | Feature | java.awt.SystemTray | notify-send / PowerShell | FastNotifications |
 |:---|:---|:---|:---|
@@ -71,13 +73,17 @@ FastNotifications.builder()
 | **Interactive Buttons** | Not supported | Complex script parameters | **Custom action buttons & callbacks** |
 | **Progress & Urgency** | Not supported | Not supported | **Live progress bars & urgency levels** |
 
-**FastNotifications** supports **3 integration levels**:
+---
+
+## Integration Levels
+
+FastNotifications provides 3 flexible integration tiers depending on deployment needs:
 
 | Level | Effort | Result |
-|-------------------------|------------------|--------------------------------|
-| **Level 1** (5 min) | Build DLL → Run | Basic notifications (Balloon) |
-| **Level 2** (2 hrs) | + Sparse Package | Full WinRT Toasts (like Teams) |
-| **Level 3** (3-10 days) | + MSIX + Store | Store distribution |
+|:---|:---|:---|
+| **Level 1** (5 min) | Build DLL → Run | Basic notifications (Balloon fallback) |
+| **Level 2** (2 hrs) | + Sparse Package | Full WinRT Toasts (like Microsoft Teams) |
+| **Level 3** (3-10 days) | + MSIX + Store | Windows Store & Enterprise distribution |
 
 ---
 
@@ -89,18 +95,6 @@ FastNotifications.builder()
 - 📊 **Progress Notifications** — Download/install progress bars
 - 🚨 **Urgency Levels** — Low, Normal, High, Critical
 - ⚡ **Zero Dependencies** — Pure JNI, no JavaFX, no Swing, no AWT
-
----
-
-## FastNotifications vs SystemTray
-
-| Feature | SystemTray | FastNotifications |
-|------------------|----------------------|----------------------|
-| Icon | ☕ Java coffee cup | 🖼️ Your custom icon |
-| Windows 11 style | ❌ Deprecated balloon | ✅ Native WinRT Toast |
-| Action buttons | ❌ None | ✅ Custom buttons |
-| Progress bars | ❌ None | ✅ Native progress |
-| Urgency/Priority | ❌ None | ⚡ High, Critical |
 
 ---
 
