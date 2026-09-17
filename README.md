@@ -36,8 +36,6 @@ FastNotifications.builder()
 
 ---
 
----
-
 ## Table of Contents
 
 - [Why FastNotifications?](#why-fastnotifications)
